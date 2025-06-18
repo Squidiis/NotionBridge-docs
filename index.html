@@ -4,31 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NotionBridge Docs</title>
+  <link rel="icon" href="docs/assets/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="./docs/css/styles.css"/>
   <link rel="stylesheet" href="./docs/css/content.css"/>
   <link rel="stylesheet" href="./docs/css/tab.css"/>
 </head>
 <body>
-  <!-- Kopfzeile -->
   <header class="site-header">
     <div class="left-nav">
-      <a href="#" id="nav-notionbridge">NotionBridge</a>
+      <a href="#" id="nav-notionbridge" title="Zurück zur Docs Hauptseite">
+        <img id="logo-img" src="docs/assets/logo-light.svg" alt="Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;" />
+        NotionBridge
+      </a>
       <a href="https://blog.example.com" target="_blank" rel="noopener">Blog</a>
-    </div>
-    <div class="logo" id="logo" title="Zurück zur Docs Hauptseite">
-      <img src="https://via.placeholder.com/120x40?text=Light+Logo" alt="Logo" />
     </div>
     <button id="dark-mode-toggle" aria-label="Dark/Light Mode umschalten" title="Dark/Light Mode umschalten">🌞</button>
   </header>
 
-  <!-- Hauptinhalt -->
   <div class="container">
-    <!-- Sidebar -->
     <nav class="sidebar">
       <ul>
-        <li>
-          <a href="#intro" data-section="intro">Intro</a>
-        </li>
+        <li><a href="#intro" data-section="intro">Intro</a></li>
         <li>
           <a href="#Database-intro" data-section="Database/intro">Database</a>
           <ul class="submenu">
@@ -59,7 +55,6 @@
       </ul>
     </nav>
 
-    <!-- Main Content -->
     <main>
       <header>
         <h1>Dokumentation</h1>
@@ -69,14 +64,12 @@
       </section>
     </main>
 
-    <!-- Table of Contents rechts -->
     <aside>
       <h3>Inhalt</h3>
       <ul id="toc"></ul>
     </aside>
   </div>
 
-  <!-- Externes Script für dynamisches Laden etc. -->
   <script src="script.js?v=1.0"></script>
 </body>
 </html>

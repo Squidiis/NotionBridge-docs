@@ -2,21 +2,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const contentArea = document.querySelector("#content");
   const toc = document.getElementById("toc");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
+  const logoImg = document.getElementById("logo-img");
 
-  // Dark Mode Initialisierung
   if (localStorage.getItem("dark-mode") === "true") {
     document.body.classList.add("dark");
     darkModeToggle.textContent = "🌙";
   }
+
+  function updateLogo(darkMode) {
+  logoImg.src = darkMode ? "docs/assets/logo-dark.svg" : "docs/assets/logo-light.svg";
+  }
+
+  updateLogo(document.body.classList.contains("dark"));
 
   darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     const isDark = document.body.classList.contains("dark");
     localStorage.setItem("dark-mode", isDark);
     darkModeToggle.textContent = isDark ? "🌙" : "🌞";
+
+    updateLogo(isDark);
   });
 
-  // Sidebar Links
   document.querySelectorAll(".sidebar li > a[data-section]").forEach(link => {
     link.addEventListener("click", async (e) => {
       e.preventDefault();
@@ -40,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Tabs initialisieren (innerhalb geladener Inhalte)
   function initTabs() {
     const tabs = contentArea.querySelectorAll('.tab-button');
     const panels = contentArea.querySelectorAll('.tab-panel');
@@ -62,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Inhalt laden
   async function loadSection(section) {
     try {
       const res = await fetch(`content/${section}.html`);
@@ -72,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       contentArea.innerHTML = html;
 
       updateTOC();
-      initTabs(); // Tabs nach dem Laden aktivieren
+      initTabs();
 
       history.pushState(null, "", `#${section}`);
     } catch (err) {
@@ -82,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Inhaltsverzeichnis aktualisieren
   function updateTOC() {
     toc.innerHTML = "";
     const headers = contentArea.querySelectorAll("h1, h2, h3");
@@ -121,13 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Beim ersten Laden Inhalt je nach URL-Hash laden
   const initial = window.location.hash?.substring(1);
   if (initial) {
-    loadSection(initial); // initTabs wird dort automatisch aufgerufen
+    loadSection(initial);
   }
 
-  // Vor-/Zurück Navigation
   window.addEventListener("popstate", () => {
     const current = window.location.hash?.substring(1);
     if (current) {
