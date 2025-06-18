@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>getBlockChildren | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1>getBlockChildren</h1>
+      <p>Retrieves the child blocks of a Notion block or page.<br />
+      Optionally supports automatic pagination to fetch all children across multiple pages.</p>
+
+      <h2>Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>blockId</code></td>
+            <td><code>string</code></td>
+            <td>—</td>
+            <td>The ID of the page or block to retrieve children from.</td>
+          </tr>
+          <tr>
+            <td><code>pageSize</code></td>
+            <td><code>number</code></td>
+            <td><code>100</code></td>
+            <td>Number of children to fetch per request (max 100).</td>
+          </tr>
+          <tr>
+            <td><code>getAll</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>If <code>true</code>, retrieves <strong>all</strong> children by following the <code>next_cursor</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Returns</h2>
+      <p>If <code>getAll</code> is <code>false</code>, returns the raw Notion API response object containing a single page of results (with <code>next_cursor</code>, etc.).</p>
+      <p>If <code>getAll</code> is <code>true</code>, returns:</p>
+      <pre><code class="language-js">{
+  results: Array&lt;Object&gt;
+}</code></pre>
+
+      <h3>Example (Get a single page of children)</h3>
+      <pre><code class="language-js">const result = await getBlockChildren("blockId");
+console.log(result.results);
+</code></pre>
+
+      <h3>Example (Get all children across pages)</h3>
+      <pre><code class="language-js">const result = await getBlockChildren("blockId", 100, true);
+console.log(result.results.length); // All children
+</code></pre>
+
+      <p>If you expect many blocks, use <code>getAll: true</code> to make sure you retrieve everything.</p>
+
+      <div class="note-box">
+        <strong>Note:</strong> The Notion API returns a maximum of 100 results per request. Use <code>getAll</code> to handle pagination automatically.<br />
+        Children can include various block types (paragraphs, headings, toggles, etc.).
+      </div>
+
+      <h2>Example Response</h2>
+      <pre><code class="language-json">{
+  "results": [
+    {
+      "object": "block",
+      "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+      "type": "divider",
+      "divider": {}
+    },
+    {
+      "object": "block",
+      "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Example paragraph"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>

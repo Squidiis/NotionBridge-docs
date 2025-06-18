@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>createPage | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1>createPage</h1>
+      <p>Creates a new page in the specified Notion database using simplified property input.</p>
+
+      <h2>Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>databaseId</code></td>
+            <td><code>string</code></td>
+            <td>The ID of the Notion database where the page will be created.</td>
+          </tr>
+          <tr>
+            <td><code>properties</code></td>
+            <td><code>object</code></td>
+            <td>A simplified key-value object of property names and their values.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Example</h2>
+      <pre><code class="language-js">const newPage = await notion.createPage('databaseId', {
+  Status: 'Open',
+  Name: 'New-Page'
+});
+console.log(newPage);</code></pre>
+
+      <h2>Supported Property Types for <code>formatProperties</code></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Property Type</th>
+            <th>Input Format Example</th>
+            <th>Output Format Example</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>title</code></td>
+            <td>"Task Name"</td>
+            <td>{ title: [{ text: { content: "Task Name" } }] }</td>
+            <td>Main title property</td>
+          </tr>
+          <tr>
+            <td><code>rich_text</code></td>
+            <td>"Some description"</td>
+            <td>{ rich_text: [{ text: { content: "Some description" } }] }</td>
+            <td>Text with formatting</td>
+          </tr>
+          <tr>
+            <td><code>select</code></td>
+            <td>"Option Name"</td>
+            <td>{ select: { name: "Option Name" } }</td>
+            <td>Single select option</td>
+          </tr>
+          <tr>
+            <td><code>status</code></td>
+            <td>"In Progress"</td>
+            <td>{ status: { name: "In Progress" } }</td>
+            <td>Status property like select</td>
+          </tr>
+          <tr>
+            <td><code>multi_select</code></td>
+            <td>["Tag1", "Tag2"]</td>
+            <td>{ multi_select: [{ name: "Tag1" }, { name: "Tag2" }] }</td>
+            <td>Multiple select options</td>
+          </tr>
+          <tr>
+            <td><code>people</code></td>
+            <td>"user_id" or ["id1", "id2"]</td>
+            <td>{ people: [{ id: "user_id" }] }</td>
+            <td>User(s) assigned to property</td>
+          </tr>
+          <tr>
+            <td><code>url</code></td>
+            <td>"https://example.com"</td>
+            <td>{ url: "https://example.com" }</td>
+            <td>URL property</td>
+          </tr>
+          <tr>
+            <td><code>email</code></td>
+            <td>"user@example.com"</td>
+            <td>{ email: "user@example.com" }</td>
+            <td>Email address</td>
+          </tr>
+          <tr>
+            <td><code>phone_number</code></td>
+            <td>"+1234567890"</td>
+            <td>{ phone_number: "+1234567890" }</td>
+            <td>Phone number</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Example usage for <code>userInput</code></h3>
+      <pre><code class="language-js">const userInput = {
+  Name: "My Task",
+  Status: "In Progress",
+  Tags: ["urgent", "frontend"],
+  Assigned: ["user-id-123"],
+  Website: "https://example.com",
+  ContactEmail: "contact@example.com",
+  Phone: "+1234567890"
+};</code></pre>
+
+      <h2>Returns</h2>
+      <p>A Promise resolving to the newly created page object returned by the Notion API.</p>
+
+      <div class="warning-box">
+        <strong>Warning:</strong> Make sure the provided property names exactly match the database schema.<br/>
+        If you try to use a property that doesn't exist, the API call will fail.<br/>
+        Use <code>getDatabaseProperties</code> to inspect the available properties before creating a new page.
+      </div>
+
+      <h2>Example Response</h2>
+      <pre><code class="language-json">{
+  "object": "page",
+  "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+  "created_time": "2025-06-08T18:51:00.000Z",
+  "last_edited_time": "2025-06-08T18:51:00.000Z",
+  "created_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "last_edited_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "cover": null,
+  "icon": null,
+  "parent": {
+    "type": "database_id",
+    "database_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+  },
+  "archived": false,
+  "in_trash": false,
+  "properties": {
+    "Status": {
+      "id": "VtRJ",
+      "type": "status",
+      "status": {
+        "name": "Open",
+        "color": "default",
+        "id": "abc123"
+      }
+    },
+    "Name": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": { "content": "Test", "link": null },
+          "plain_text": "Test"
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/Test-d3f9a2b71c5a4e8bb4569f0a12345678",
+  "public_url": null
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>

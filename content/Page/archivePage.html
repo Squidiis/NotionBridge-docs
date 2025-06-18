@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>archivePage | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1>archivePage</h1>
+      <p>Archives an existing Notion page by setting the <code>archived</code> property to <code>true</code>.</p>
+
+      <h2>Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>pageId</code></td>
+            <td><code>string</code></td>
+            <td>The ID of the Notion page to archive.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Example</h2>
+      <pre><code class="language-js">const result = await notion.archivePage('pageId');
+console.log(result);</code></pre>
+
+      <h2>Returns</h2>
+      <p>A Promise resolving to the updated page object with <code>archived: true</code>.</p>
+
+      <div class="tip-box">
+        <strong>Tip:</strong> You can unarchive a page later by updating it with <code>archived: false</code> using <code>updatePage</code>.
+      </div>
+
+      <h2>Example Response</h2>
+      <pre><code class="language-json">{
+  "object": "page",
+  "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+  "created_time": "2025-05-31T15:24:00.000Z",
+  "last_edited_time": "2025-06-09T16:41:00.000Z",
+  "created_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "last_edited_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "cover": null,
+  "icon": null,
+  "parent": {
+    "type": "database_id",
+    "database_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+  },
+  "archived": true,
+  "in_trash": false,
+  "properties": {
+    "Status": { "id": "VtRJ", "type": "status", "status": "[Object]" }
+  },
+  "url": "https://www.notion.so/Test-d3f9a2b71c5a4e8bb4569f0a12345678",
+  "public_url": null,
+  "request_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>appendBlockChildren | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1>appendBlockChildren</h1>
+      <p>Appends child blocks to a specified block or page using the Notion API.</p>
+
+      <h2>Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>blockId</code></td>
+            <td><code>string</code></td>
+            <td>ID of the parent block or page to append children to</td>
+          </tr>
+          <tr>
+            <td><code>children</code></td>
+            <td><code>Array&lt;Object&gt;</code></td>
+            <td>Array of Notion block objects created by block builder functions</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Returns</h2>
+      <p>A <code>Promise</code> that resolves to the updated block object containing the new children.</p>
+
+      <h2>Usage with Block Builder Functions</h2>
+      <p>These helper functions can be used to generate valid block objects:</p>
+      <ul>
+        <li><code>createParagraphBlock(text)</code></li>
+        <li><code>createHeadingBlock(text, level)</code></li>
+        <li><code>createToDoBlock(text, checked)</code></li>
+        <li><code>createBulletedListBlock(text)</code></li>
+        <li><code>createNumberedListBlock(text)</code></li>
+        <li><code>createToggleBlock(text, children)</code></li>
+        <li><code>createDividerBlock()</code></li>
+        <li><code>createCodeBlock(code, language)</code></li>
+        <li><code>createImageBlock(imageUrl)</code></li>
+        <li><code>createCalloutBlock(text, icon)</code></li>
+        <li><code>createQuoteBlock(text)</code></li>
+        <li><code>createPageLinkBlock(pageId)</code></li>
+      </ul>
+
+      <h2>Example</h2>
+      <pre><code class="language-js">const blocks = [
+  notion.createHeadingBlock("Project Overview", 2),
+  notion.createParagraphBlock("This is the introduction."),
+  notion.createToDoBlock("Write documentation", true),
+  notion.createBulletedListBlock("First bullet"),
+  notion.createNumberedListBlock("Step one"),
+  notion.createCodeBlock("console.log('Hello, world!');", "javascript"),
+  notion.createImageBlock("https://example.com/image.png"),
+  notion.createCalloutBlock("Don't forget to hydrate!", "💧"),
+  notion.createQuoteBlock("Simplicity is the ultimate sophistication."),
+  notion.createDividerBlock(),
+];
+
+await notion.appendBlockChildren("parentBlockId", blocks);
+</code></pre>
+
+      <h2>Notes</h2>
+      <ul>
+        <li>The <code>blockId</code> must refer to a block type that supports children (e.g., pages, toggles).</li>
+        <li><code>children</code> must be an array of valid Notion block objects.</li>
+      </ul>
+      <p>This operation is additive. Existing children will remain intact unless explicitly removed by another operation.</p>
+
+      <h2>Example Response</h2>
+      <pre><code class="language-json">{
+  "object": "list",
+  "results": [
+    {
+      "object": "block",
+      "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+      "parent": {
+        "type": "block_id",
+        "block_id": "some-parent-id"
+      },
+      "created_time": "2025-06-10T16:30:00.000Z",
+      "last_edited_time": "2025-06-10T16:30:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "user-id"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "user-id"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "This is a new paragraph.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "This is a new paragraph.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    }
+  ],
+  "next_cursor": null,
+  "has_more": false,
+  "type": "block",
+  "block": {},
+  "request_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>

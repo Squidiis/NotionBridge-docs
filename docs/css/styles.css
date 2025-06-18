@@ -11,13 +11,13 @@ body {
   background-color: #fff;
   color: #222;
   transition: background-color 0.3s, color 0.3s;
+  overflow: hidden;
 }
 body.dark {
   background-color: #121212;
   color: #ddd;
 }
 
-/* Header */
 header.site-header {
   display: flex;
   align-items: center;
@@ -33,7 +33,6 @@ body.dark header.site-header {
   background-color: #003a6d;
 }
 
-/* Left nav links */
 .left-nav {
   display: flex;
   gap: 1.5rem;
@@ -41,7 +40,6 @@ body.dark header.site-header {
   flex: 1;
 }
 
-/* Logo center */
 .logo {
   cursor: pointer;
   flex-shrink: 0;
@@ -52,7 +50,6 @@ body.dark header.site-header {
   transition: filter 0.3s;
 }
 
-/* Dark mode toggle right */
 #dark-mode-toggle {
   background: none;
   border: none;
@@ -66,14 +63,13 @@ body.dark header.site-header {
   color: #ffd700;
 }
 
-/* Main container */
 .container {
   flex: 1;
   display: flex;
   overflow: hidden;
+  height: calc(100vh - 60px); 
 }
 
-/* Sidebar */
 nav.sidebar {
   width: 220px;
   background-color: #f0f0f0;
@@ -82,6 +78,13 @@ nav.sidebar {
   overflow-y: auto;
   border-right: 1px solid #ccc;
   transition: background-color 0.3s, color 0.3s;
+
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+nav.sidebar::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
 }
 body.dark nav.sidebar {
   background-color: #1e1e1e;
@@ -89,14 +92,12 @@ body.dark nav.sidebar {
   border-color: #444;
 }
 
-/* Sidebar Listen-Grundstruktur */
 nav.sidebar ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-/* Hauptpunkte */
 nav.sidebar > ul > li {
   margin-bottom: 0.5rem;
 }
@@ -110,7 +111,6 @@ nav.sidebar > ul > li > a {
   cursor: pointer;
 }
 
-/* Hover Hauptpunkte */
 nav.sidebar > ul > li > a:hover {
   color: #0078d4;
 }
@@ -118,20 +118,22 @@ body.dark nav.sidebar > ul > li > a:hover {
   color: #5dade2;
 }
 
-/* Untermenü */
 nav.sidebar .submenu {
-  padding-left: 1.5rem;   /* Einrückung des Untermenüs */
+  padding-left: 1.5rem;  
   margin-top: 0.3rem;
+  display: none;
+}
+nav.sidebar .submenu.open {
+  display: block;
 }
 
-/* Unterpunkte */
 nav.sidebar .submenu li {
   margin-bottom: 0.3rem;
 }
 
 nav.sidebar .submenu li a {
   display: block;
-  padding-left: 1rem;     /* Weitere Einrückung für den Linktext */
+  padding-left: 1rem; 
   font-weight: normal;
   font-size: 0.9rem;
   color: #444;
@@ -142,12 +144,10 @@ body.dark nav.sidebar .submenu li a {
   color: #bbb;
 }
 
-/* Hover Unterpunkte */
 nav.sidebar .submenu li a:hover {
   color: #0078d4;
 }
 
-/* Main content */
 main {
   flex: 1;
   display: flex;
@@ -182,7 +182,6 @@ section#content {
   overflow-y: auto;
 }
 
-/* Right aside (Table of Contents) */
 aside {
   width: 200px;
   padding: 1rem;
@@ -225,10 +224,22 @@ aside a:hover {
   text-decoration: underline;
 }
 
-nav.sidebar .submenu {
+body.no-sidebar .sidebar {
   display: none;
 }
 
-nav.sidebar .submenu.open {
-  display: block;
+body.no-sidebar main {
+  flex-grow: 1;
+}
+
+main, section#content {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+main::-webkit-scrollbar,
+section#content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }

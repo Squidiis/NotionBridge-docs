@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NotionBridge Introduction</title>
+</head>
+<body>
+  <main>
+    <h1>NotionBridge</h1>
+
+    <div>
+      ⚠️ <strong>Currently under active development</strong>
+    </div>
+
+    <p><strong>A minimalist wrapper for the Notion API – no official SDK required</strong></p>
+
+    <p><strong>NotionBridge</strong> is a lightweight JavaScript library that simplifies working with the Notion API. It provides an intuitive and minimal interface, removing unnecessary complexity and third-party dependencies. With just a few core functions, you can easily create, query, and manage Notion databases, pages, and blocks.</p>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Retrieve database properties (detailed or simplified)</li>
+      <li>Query databases with filters</li>
+      <li>Fetch all entries with automatic pagination</li>
+      <li>Create new pages or databases</li>
+      <li>Add content blocks (e.g., paragraphs, headings, lists, to-dos, callouts, quotes)</li>
+      <li>Update or archive pages</li>
+      <li>Delete or clear blocks</li>
+      <li>No external SDK – uses native <code>fetch</code></li>
+    </ul>
+
+    <h2>Installation</h2>
+    <p>Install NotionBridge directly from GitHub:</p>
+    <pre><code>npm install git+https://github.com/Squidiis/NotionBridge.git</code></pre>
+
+    <h2>Setup</h2>
+    <p>To connect NotionBridge to your Notion workspace, you will need to:</p>
+
+    <h3>Create a Notion Integration</h3>
+    <ol>
+      <li>Go to <a href="https://www.notion.com/my-integrations" target="_blank" rel="noopener">https://www.notion.com/my-integrations</a></li>
+      <li>Click “New integration”</li>
+      <li>Fill in the required details</li>
+      <li>Choose a name</li>
+      <li>Select your workspace</li>
+      <li>Enable necessary permissions (e.g., read, write, update, delete)</li>
+      <li>Click Submit</li>
+      <li>Copy the Internal Integration Token – this is your API key</li>
+    </ol>
+
+    <h3>Grant the Integration Access to Your Database</h3>
+    <ol>
+      <li>Open the target database or template in Notion</li>
+      <li>Click “Share” in the top-right corner</li>
+      <li>Under “Invite,” search for your integration (e.g., “NotionBridge”)</li>
+      <li>Click “Invite” to allow access</li>
+    </ol>
+
+    <p>⚠️ Without this step, your integration will not be authorized and API requests will return a 403 Forbidden error.</p>
+
+    <h2>Example Usage</h2>
+    <pre><code>import easynotion from 'easynotion';
+
+const notion = easynotion('secret_abc123xyz456'); // Use your own integration token
+
+// Example: Query a Notion database
+const entries = await notion.queryDatabase('your-database-id');
+console.log(entries);
+</code></pre>
+
+    <h2>Finding Your Database ID</h2>
+    <p>To find your Notion database ID:</p>
+    <ol>
+      <li>Open the database in Notion</li>
+      <li>Copy the full URL, for example:<br />
+        <code>https://www.notion.so/workspace/Database-Name-abcdef1234567890abcdef1234567890</code>
+      </li>
+      <li>The 32-character string at the end is your database ID</li>
+    </ol>
+  </main>
+</body>
+</html>

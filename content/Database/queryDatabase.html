@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+  <title>queryDatabase</title>
+</head>
+<body>
+
+  <h1>queryDatabase</h1>
+
+  <p>Executes a simple query on a Notion database and returns the <strong>first page of matching results</strong>.<br />
+  This is a lightweight version of <code>queryAllDatabase</code>, designed for quick lookups or previews.</p>
+
+  <h2>Parameters</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>databaseId</code></td>
+        <td><code>string</code></td>
+        <td>The ID of the Notion database</td>
+      </tr>
+      <tr>
+        <td><code>filter</code></td>
+        <td><code>object</code></td>
+        <td><em>(optional)</em> A simplified filter object (see syntax below)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Simplified Filter Syntax</h2>
+  <p>Instead of passing the full Notion API filter structure, you can provide an intuitive shorthand:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Property Type</th>
+        <th>Expected Input Format</th>
+        <th>Explanation / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>status</code> / <code>select</code></td>
+        <td>string → <code>{ equals: "value" }</code></td>
+        <td>Filter by exact option name</td>
+      </tr>
+      <tr>
+        <td><code>multi_select</code></td>
+        <td>string → <code>{ contains: "value" }</code></td>
+        <td>Filter if multi-select contains the given value</td>
+      </tr>
+      <tr>
+        <td><code>date</code></td>
+        <td>object → <code>{ equals / before / after / on_or_before / on_or_after / past_week / ... }</code></td>
+        <td>Supports various date comparison operators</td>
+      </tr>
+      <tr>
+        <td><code>number</code></td>
+        <td>object → <code>{ equals / greater_than / less_than / ... }</code></td>
+        <td>Numeric comparisons with operators</td>
+      </tr>
+      <tr>
+        <td><code>checkbox</code></td>
+        <td>boolean → <code>{ equals: true/false }</code></td>
+        <td>True or false toggle filtering</td>
+      </tr>
+      <tr>
+        <td><code>people</code> / <code>relation</code></td>
+        <td>string → <code>{ contains: "user_id" or "page_id" }</code></td>
+        <td>Checks if user or page ID is contained</td>
+      </tr>
+      <tr>
+        <td><code>title</code> / <code>rich_text</code></td>
+        <td>string → <code>{ contains: "text" }</code></td>
+        <td>Text search in title or rich text properties</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warning-box">
+    <strong>Warning:</strong> If you reference a property that <strong>does not exist</strong> in the database schema, this function will throw an error like:<br />
+    <code>Error: Unknown property:</code><br />
+    To avoid this, make sure all property names in your filter match exactly — including case, spaces, emojis, and special characters.<br />
+    Use <code>getDatabaseProperties(databaseId)</code> to inspect all valid property keys before filtering:<br />
+    <pre><code>const schema = await notion.getDatabaseProperties(databaseId);
+console.log(Object.keys(schema));</code></pre>
+  </div>
+
+  <h2>Example</h2>
+  <pre><code>const filter = {
+  Status: 'In Progress',
+  Estimate: { greater_than: 5 }
+};
+
+const result = await notion.queryDatabase('your-database-id', filter);
+console.log(result.results);</code></pre>
+
+  <h2>Returns</h2>
+  <p>A <code>Promise</code> resolving to an object containing:</p>
+  <ul>
+    <li>Up to 100 matching pages</li>
+    <li>Metadata for pagination (e.g. <code>has_more</code>, <code>next_cursor</code>)</li>
+  </ul>
+
+  <h2>Example Response</h2>
+  <pre><code>{
+  "object": "list",
+  "results": [
+    {
+      "object": "page",
+      "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+      "properties": {
+        "Status": {
+          "type": "status",
+          "status": {
+            "name": "In Progress"
+          }
+        },
+        "Estimate": {
+          "type": "number",
+          "number": 8
+        }
+      },
+      "url": "https://www.notion.so/Test-d3f9a2b71c5a4e8bb4569f0a12345678"
+    }
+  ],
+  "next_cursor": null,
+  "has_more": false
+}</code></pre>
+
+</body>
+</html>

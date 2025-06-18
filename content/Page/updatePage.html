@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>updatePage | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1>updatePage</h1>
+      <p>Updates a Notion page’s metadata and properties, including properties, icon, cover, and archived status.</p>
+
+      <h2>Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>pageId</code></td>
+            <td><code>string</code></td>
+            <td>The ID of the Notion page to update.</td>
+          </tr>
+          <tr>
+            <td><code>update</code></td>
+            <td><code>object</code></td>
+            <td>Object containing the values to update. Possible keys include:
+              <ul>
+                <li><code>properties</code>: Object of property values to update (e.g. <code>{ Name: "..." }</code>)</li>
+                <li><code>icon</code>: Emoji string, image URL, or Notion icon object</li>
+                <li><code>cover</code>: External image URL to set as cover</li>
+                <li><code>archived</code>: <code>true</code> or <code>false</code> to archive/unarchive the page</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Example</h2>
+      <pre><code class="language-js">const result = await notion.updatePage('pageId', {
+  properties: {
+    Status: "Done",
+    Name: "Updated Task Title"
+  },
+  icon: "✅",
+  cover: "html://...",
+  archived: false
+});
+console.log(result);
+</code></pre>
+
+      <h2>Returns</h2>
+      <p>A Promise resolving to the updated Notion page object.</p>
+
+      <div class="warning-box">
+        <strong>Warning:</strong> Make sure the provided property names exactly match the database schema.<br />
+        If you try to use a property that doesn't exist, the API call will fail.<br />
+        Use <code>getDatabaseProperties</code> to inspect the available properties before updating a page.
+      </div>
+
+      <h2>Example Response</h2>
+      <pre><code class="language-json">{
+  "object": "page",
+  "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+  "created_time": "2025-05-31T15:24:00.000Z",
+  "last_edited_time": "2025-06-09T16:55:00.000Z",
+  "created_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "last_edited_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "cover": null,
+  "icon": null,
+  "parent": {
+    "type": "database_id",
+    "database_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+  },
+  "archived": false,
+  "in_trash": false,
+  "properties": {
+    "Status": { "id": "VtRJ", "type": "status", "status": "[Object]" }
+  },
+  "url": "https://www.notion.so/Test-d3f9a2b71c5a4e8bb459f0a12345678",
+  "public_url": null,
+  "request_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>

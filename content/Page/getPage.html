@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>getPage | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1>getPage</h1>
+      <p>Retrieves the metadata and properties of a specific Notion page by its ID.</p>
+
+      <h2>Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>pageId</code></td>
+            <td><code>string</code></td>
+            <td>The ID of the Notion page to retrieve.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Example</h2>
+      <pre><code class="language-js">const page = await notion.getPage('pageId');
+console.log(page);</code></pre>
+
+      <h2>Returns</h2>
+      <p>A Promise resolving to the Notion page object with all metadata and properties.</p>
+
+      <h2>Example Response</h2>
+      <pre><code class="language-json">{
+  "object": "page",
+  "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
+  "created_time": "2025-05-31T15:24:00.000Z",
+  "last_edited_time": "2025-06-01T19:47:00.000Z",
+  "created_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "last_edited_by": { "object": "user", "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678" },
+  "cover": null,
+  "icon": null,
+  "parent": {
+    "type": "database_id",
+    "database_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+  },
+  "archived": false,
+  "in_trash": false,
+  "properties": {
+    "Status": { "id": "VtRJ", "type": "status", "status": { /* ... */ } },
+    "Name": { "id": "title", "type": "title", "title": [ /* ... */ ] }
+  },
+  "url": "https://www.notion.so/Test-d3f9a2b71c5a4e8bb4569f0a12345678",
+  "public_url": null,
+  "request_id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678"
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>
