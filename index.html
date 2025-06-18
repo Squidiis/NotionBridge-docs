@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NotionBridge Docs</title>
+  <link rel="stylesheet" href="styles.css?v=1.0" />
+</head>
+<body>
+  <!-- Kopfzeile -->
+  <header class="site-header">
+    <div class="left-nav">
+      <a href="#" id="nav-notionbridge">NotionBridge</a>
+      <a href="https://blog.example.com" target="_blank" rel="noopener">Blog</a>
+    </div>
+    <div class="logo" id="logo" title="Zurück zur Docs Hauptseite">
+      <img src="https://via.placeholder.com/120x40?text=Light+Logo" alt="Logo" />
+    </div>
+    <button id="dark-mode-toggle" aria-label="Dark/Light Mode umschalten" title="Dark/Light Mode umschalten">🌞</button>
+  </header>
+
+  <!-- Hauptinhalt -->
+  <div class="container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <ul>
+        <li>
+          <a href="#intro" data-section="intro">Intro</a>
+        </li>
+        <li>
+          <a href="#Database-intro" data-section="Database/intro">Database</a>
+          <ul class="submenu">
+            <li><a href="#Database-getDatabaseProperties" data-section="Database/getDatabaseProperties">getDatabaseProperties</a></li>
+            <li><a href="#Database-createDatabase" data-section="Database/createDatabase">createDatabase</a></li>
+            <li><a href="#Database-queryDatabase" data-section="Database/queryDatabase">queryDatabase</a></li>
+            <li><a href="#Database-queryAllDatabase" data-section="Database/queryAllDatabase">queryAllDatabase</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#Page-intro" data-section="Page/intro">Page</a>
+          <ul class="submenu">
+            <li><a href="#Page-getPage" data-section="Page/getPage">getPage</a></li>
+            <li><a href="#Page-createPage" data-section="Page/createPage">createPage</a></li>
+            <li><a href="#Page-archivePage" data-section="Page/archivePage">archivePage</a></li>
+            <li><a href="#Page-updatePage" data-section="Page/updatePage">updatePage</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#Block-intro" data-section="Block/intro">Block</a>
+          <ul class="submenu">
+            <li><a href="#Block-getBlockChildren" data-section="Block/getBlockChildren">getBlockChildren</a></li>
+            <li><a href="#Block-appendBlockChildren" data-section="Block/appendBlockChildren">appendBlockChildren</a></li>
+            <li><a href="#Block-deleteBlock" data-section="Block/deleteBlock">deleteBlock</a></li>
+            <li><a href="#Block-clearPage" data-section="Block/clearPage">clearPage</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+      <header>
+        <h1>Dokumentation</h1>
+      </header>
+      <section id="content">
+        <p>Willkommen! Wähle ein Thema aus dem Menü links.</p>
+      </section>
+    </main>
+
+    <!-- Table of Contents rechts -->
+    <aside>
+      <h3>Inhalt</h3>
+      <ul id="toc"></ul>
+    </aside>
+  </div>
+
+  <script src="script.js?v=1.0"></script>
+</body>
+</html>
