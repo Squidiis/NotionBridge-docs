@@ -3,13 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const toc = document.getElementById("toc");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
 
-  // Dark Mode setzen beim ersten Laden
+  // Dark Mode Initialisierung
   if (localStorage.getItem("dark-mode") === "true") {
     document.body.classList.add("dark");
     darkModeToggle.textContent = "🌙";
   }
 
-  // Dark Mode Umschalten
   darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     const isDark = document.body.classList.contains("dark");
@@ -17,13 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     darkModeToggle.textContent = isDark ? "🌙" : "🌞";
   });
 
-  // Menü klickbar machen (Dropdown ein-/ausklappen und Inhalte laden)
+  // Sidebar Links
   document.querySelectorAll(".sidebar li > a[data-section]").forEach(link => {
     link.addEventListener("click", async (e) => {
       e.preventDefault();
       const section = link.getAttribute("data-section");
 
-      // Wenn es ein Untermenü gibt: nur Dropdown öffnen/schließen
       const submenu = link.parentElement.querySelector(".submenu");
       if (submenu) {
         submenu.classList.toggle("open");
@@ -34,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Unterseiten-Klick
   document.querySelectorAll(".submenu a[data-section]").forEach(link => {
     link.addEventListener("click", async (e) => {
       e.preventDefault();
@@ -43,7 +40,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Lade und zeige Content
+  // Tabs initialisieren (innerhalb geladener Inhalte)
+  function initTabs() {
+    const tabs = contentArea.querySelectorAll('.tab-button');
+    const panels = contentArea.querySelectorAll('.tab-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        panels.forEach(panel => panel.setAttribute('hidden', true));
+        const panelId = tab.getAttribute('aria-controls');
+        const target = contentArea.querySelector(`#${panelId}`);
+        if (target) target.removeAttribute('hidden');
+      });
+    });
+  }
+
+  // Inhalt laden
   async function loadSection(section) {
     try {
       const res = await fetch(`content/${section}.html`);
@@ -52,32 +71,30 @@ document.addEventListener("DOMContentLoaded", () => {
       const html = await res.text();
       contentArea.innerHTML = html;
 
-      // TOC aktualisieren nach dem Content-Setzen
       updateTOC();
+      initTabs(); // Tabs nach dem Laden aktivieren
 
       history.pushState(null, "", `#${section}`);
     } catch (err) {
       contentArea.innerHTML = `<p>⚠️ Konnte <strong>${section}</strong> nicht laden.</p>`;
-      toc.innerHTML = ""; // TOC leeren, wenn Fehler
+      toc.innerHTML = "";
       console.error(err);
     }
   }
 
-  // TOC aus den Überschriften in #content generieren
+  // Inhaltsverzeichnis aktualisieren
   function updateTOC() {
     toc.innerHTML = "";
     const headers = contentArea.querySelectorAll("h1, h2, h3");
     if (!headers.length) return;
 
     let currentLevel = 1;
-    let ulStack = [toc]; // Stack der ul-Elemente nach Level
-
+    let ulStack = [toc];
     headers.forEach(header => {
-      const level = parseInt(header.tagName.substring(1)); // 1, 2, 3
+      const level = parseInt(header.tagName.substring(1));
       const text = header.textContent;
       let id = header.id;
       if (!id) {
-        // id aus Text generieren, nur einfache Zeichen und Bindestriche
         id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
         header.id = id;
       }
@@ -89,34 +106,28 @@ document.addEventListener("DOMContentLoaded", () => {
       li.appendChild(a);
 
       if (level > currentLevel) {
-        // Tieferes Level: neues UL erstellen, in letztes LI einhängen
         const newUl = document.createElement("ul");
         ulStack[ulStack.length - 1].lastElementChild.appendChild(newUl);
         ulStack.push(newUl);
       } else if (level < currentLevel) {
-        // Höheres Level: ulStack zurückgehen
         while (ulStack.length > 1 && level < currentLevel) {
           ulStack.pop();
           currentLevel--;
         }
       }
-      // aktuelles Level anpassen
       currentLevel = level;
 
       ulStack[ulStack.length - 1].appendChild(li);
     });
   }
 
-  // Wenn Hash vorhanden (z. B. beim Neuladen)
+  // Beim ersten Laden Inhalt je nach URL-Hash laden
   const initial = window.location.hash?.substring(1);
   if (initial) {
-    loadSection(initial);
-  } else {
-    // Startseite laden, falls gewünscht
-    // loadSection("intro");
+    loadSection(initial); // initTabs wird dort automatisch aufgerufen
   }
 
-  // Wenn Nutzer zurück/vor navigiert
+  // Vor-/Zurück Navigation
   window.addEventListener("popstate", () => {
     const current = window.location.hash?.substring(1);
     if (current) {

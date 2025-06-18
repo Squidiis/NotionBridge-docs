@@ -43,47 +43,50 @@
 
     <h2>Example Response</h2>
 
-    <div class="tab-section">
-        <div class="tab-title">Full: false</div>
-        <pre class="json-example"><code>{
-    "Status": {
-        "type": "status",
-        "options": ["To Do", "In Progress", "Done"]
-    },
-    "Priority": {
-        "type": "select",
-        "options": ["Low", "Medium", "High"]
-    },
-    "Due Date": { "type": "date" },
-    "Assignee": { "type": "people" },
-    "Name": { "type": "title" }
-    }</code></pre>
+    <div class="tabs" role="tablist" aria-label="Response mode tabs">
+      <button class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-compact" id="tab-compact">Full: false</button>
+      <button class="tab-button" role="tab" aria-selected="false" aria-controls="panel-detailed" id="tab-detailed">Full: true</button>
     </div>
 
-    <div class="tab-section">
-        <div class="tab-title">Full: true</div>
-        <pre class="json-example"><code>{
-    "details": {
-        "Status": {
-        "type": "status",
-        "options": [
-            { "id": "a1", "name": "To Do", "color": "red", "description": null },
-            { "id": "a2", "name": "In Progress", "color": "yellow", "description": null },
-            { "id": "a3", "name": "Done", "color": "green", "description": null }
-        ]
-        },
-        "Priority": {
-        "type": "select",
-        "options": [
-            { "id": "p1", "name": "Low", "color": "blue", "description": null },
-            { "id": "p2", "name": "Medium", "color": "orange", "description": null },
-            { "id": "p3", "name": "High", "color": "red", "description": null }
-        ]
-        },
-        "Due Date": { "type": "date" },
-        "Assignee": { "type": "people" },
-        "Name": { "type": "title" }
-    }
+    <div tabindex="0" class="tab-panel" role="tabpanel" id="panel-compact" aria-labelledby="tab-compact">
+      <pre><code>{
+  "Status": {
+      "type": "status",
+      "options": ["To Do", "In Progress", "Done"]
+  },
+  "Priority": {
+      "type": "select",
+      "options": ["Low", "Medium", "High"]
+  },
+  "Due Date": { "type": "date" },
+  "Assignee": { "type": "people" },
+  "Name": { "type": "title" }
+}</code></pre>
+    </div>
+
+    <div tabindex="0" class="tab-panel" role="tabpanel" id="panel-detailed" aria-labelledby="tab-detailed" hidden>
+      <pre><code>{
+  "details": {
+      "Status": {
+      "type": "status",
+      "options": [
+          { "id": "a1", "name": "To Do", "color": "red", "description": null },
+          { "id": "a2", "name": "In Progress", "color": "yellow", "description": null },
+          { "id": "a3", "name": "Done", "color": "green", "description": null }
+      ]
+      },
+      "Priority": {
+      "type": "select",
+      "options": [
+          { "id": "p1", "name": "Low", "color": "blue", "description": null },
+          { "id": "p2", "name": "Medium", "color": "orange", "description": null },
+          { "id": "p3", "name": "High", "color": "red", "description": null }
+      ]
+      },
+      "Due Date": { "type": "date" },
+      "Assignee": { "type": "people" },
+      "Name": { "type": "title" }
+  }
 }</code></pre>
     </div>
 

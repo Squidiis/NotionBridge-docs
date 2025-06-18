@@ -12,7 +12,6 @@ h1, h2, h3 {
 table {
   border-collapse: collapse;
   width: 100%;
-  max-width: 700px;
   margin-bottom: 1rem;
 }
 
@@ -73,14 +72,14 @@ code {
 }
 
 .note-box {
-  background-color: #f5f7fa;   
-  border: 1px solid #d1d5db;  
-  border-radius: 6px;          
-  padding: 16px 20px;         
-  margin: 1em 0;               
+  background-color: #f5f7fa;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 1em 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
-  color: #333;                 
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
-  word-break: break-word;      
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  word-break: break-word;
 }
