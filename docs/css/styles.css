@@ -126,14 +126,11 @@ body.dark nav.sidebar > ul > li > a:hover {
   color: #5dade2;
 }
 
+/* Hier die Änderung: Untermenüs immer sichtbar */
 nav.sidebar .submenu {
   padding-left: 1.5rem;
   margin-top: 0.3rem;
-  display: none;
-}
-
-nav.sidebar .submenu.open {
-  display: block;
+  display: block !important;
 }
 
 nav.sidebar .submenu li {

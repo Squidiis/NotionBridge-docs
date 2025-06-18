@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateLogo(darkMode) {
-  logoImg.src = darkMode ? "docs/assets/logo-dark.svg" : "docs/assets/logo-light.svg";
+    logoImg.src = darkMode ? "docs/assets/logo-dark.svg" : "docs/assets/logo-light.svg";
   }
 
   updateLogo(document.body.classList.contains("dark"));
@@ -20,32 +20,65 @@ document.addEventListener("DOMContentLoaded", () => {
     const isDark = document.body.classList.contains("dark");
     localStorage.setItem("dark-mode", isDark);
     darkModeToggle.textContent = isDark ? "🌙" : "🌞";
-
     updateLogo(isDark);
   });
 
-  document.querySelectorAll(".sidebar li > a[data-section]").forEach(link => {
+  document.querySelectorAll(".sidebar a[data-section]").forEach(link => {
     link.addEventListener("click", async (e) => {
       e.preventDefault();
       const section = link.getAttribute("data-section");
+      await loadSection(section);
+    });
+  });
 
-      const submenu = link.parentElement.querySelector(".submenu");
-      if (submenu) {
-        submenu.classList.toggle("open");
-        return;
+  async function loadSection(section) {
+    try {
+      const res = await fetch(`content/${section}.html`);
+      if (!res.ok) throw new Error(`Fehler beim Laden von ${section}`);
+      const html = await res.text();
+      contentArea.innerHTML = html;
+      updateTOC();
+      initTabs(); 
+    } catch (err) {
+      contentArea.innerHTML = `<p>⚠️ Konnte <strong>${section}</strong> nicht laden.</p>`;
+      toc.innerHTML = "";
+      console.error(err);
+    }
+  }
+
+  function updateTOC() {
+    toc.innerHTML = "";
+    const headers = contentArea.querySelectorAll("h1, h2, h3");
+    if (!headers.length) return;
+
+    let currentLevel = 1;
+    let ulStack = [toc];
+    headers.forEach(header => {
+      const level = parseInt(header.tagName.substring(1));
+      const text = header.textContent;
+      let id = header.id || text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
+      header.id = id;
+
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `#${id}`;
+      a.textContent = text;
+      li.appendChild(a);
+
+      if (level > currentLevel) {
+        const newUl = document.createElement("ul");
+        ulStack[ulStack.length - 1].lastElementChild.appendChild(newUl);
+        ulStack.push(newUl);
+      } else if (level < currentLevel) {
+        while (ulStack.length > 1 && level < currentLevel) {
+          ulStack.pop();
+          currentLevel--;
+        }
       }
-
-      await loadSection(section);
+      currentLevel = level;
+      ulStack[ulStack.length - 1].appendChild(li);
     });
-  });
-
-  document.querySelectorAll(".submenu a[data-section]").forEach(link => {
-    link.addEventListener("click", async (e) => {
-      e.preventDefault();
-      const section = link.getAttribute("data-section");
-      await loadSection(section);
-    });
-  });
+  }
 
   function initTabs() {
     const tabs = contentArea.querySelectorAll('.tab-button');
@@ -68,72 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  async function loadSection(section) {
-    try {
-      const res = await fetch(`content/${section}.html`);
-      if (!res.ok) throw new Error(`Fehler beim Laden von ${section}`);
-
-      const html = await res.text();
-      contentArea.innerHTML = html;
-
-      updateTOC();
-      initTabs();
-
-      history.pushState(null, "", `#${section}`);
-    } catch (err) {
-      contentArea.innerHTML = `<p>⚠️ Konnte <strong>${section}</strong> nicht laden.</p>`;
-      toc.innerHTML = "";
-      console.error(err);
-    }
-  }
-
-  function updateTOC() {
-    toc.innerHTML = "";
-    const headers = contentArea.querySelectorAll("h1, h2, h3");
-    if (!headers.length) return;
-
-    let currentLevel = 1;
-    let ulStack = [toc];
-    headers.forEach(header => {
-      const level = parseInt(header.tagName.substring(1));
-      const text = header.textContent;
-      let id = header.id;
-      if (!id) {
-        id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
-        header.id = id;
-      }
-
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = `#${id}`;
-      a.textContent = text;
-      li.appendChild(a);
-
-      if (level > currentLevel) {
-        const newUl = document.createElement("ul");
-        ulStack[ulStack.length - 1].lastElementChild.appendChild(newUl);
-        ulStack.push(newUl);
-      } else if (level < currentLevel) {
-        while (ulStack.length > 1 && level < currentLevel) {
-          ulStack.pop();
-          currentLevel--;
-        }
-      }
-      currentLevel = level;
-
-      ulStack[ulStack.length - 1].appendChild(li);
-    });
-  }
-
   const initial = window.location.hash?.substring(1);
-  if (initial) {
-    loadSection(initial);
-  }
+  if (initial) loadSection(initial);
 
   window.addEventListener("popstate", () => {
     const current = window.location.hash?.substring(1);
-    if (current) {
-      loadSection(current);
-    }
+    if (current) loadSection(current);
   });
 });
