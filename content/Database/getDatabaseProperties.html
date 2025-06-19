@@ -7,11 +7,11 @@
     <title>getDatabaseProperties</title>
 </head>
 <body>
-    <h1>getDatabaseProperties</h1>
+    <h1 id="getDatabaseProperties">getDatabaseProperties</h1>
 
     <p>Fetches the properties of a Notion database by ID.</p>
 
-    <h2>Parameters</h2>
+    <h2 id="parameters">Parameters</h2>
     <table>
         <thead>
         <tr>
@@ -34,14 +34,14 @@
         </tbody>
     </table>
 
-    <h2>Example</h2>
+    <h2 id="example">Example</h2>
     <pre><code>const result = await notion.getDatabaseProperties('ID of the Database', { full:false })</code></pre>
 
-    <h2>Returns</h2>
+    <h2 id="returns">Returns</h2>
     <p>A <code>Promise</code> resolving to an object with the database's properties.</p>
     <p>If <code>options.full</code> is <code>true</code>, option lists include additional metadata (like <code>id</code>, <code>color</code>, and <code>description</code>).</p>
 
-    <h2>Example Response</h2>
+    <h2 id="example-response">Example Response</h2>
 
     <div class="tabs" role="tablist" aria-label="Response mode tabs">
       <button class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-compact" id="tab-compact">Full: false</button>

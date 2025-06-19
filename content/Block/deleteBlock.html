@@ -9,10 +9,10 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>deleteBlock</h1>
+      <h1 id="deleteBlock">deleteBlock</h1>
       <p>Deletes a block by removing it from the page.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -30,10 +30,10 @@
         </tbody>
       </table>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>A <code>Promise</code> that resolves to the API response object.</p>
 
-      <h2>Example</h2>
+      <h2 id="example">Example</h2>
       <pre><code class="language-js">const result = await notion.deleteBlock("block-id");
 console.log(result);
 </code></pre>
@@ -41,10 +41,9 @@ console.log(result);
       <div class="note-box">
         <strong>Note:</strong> This will remove the specified block from the page. The block is marked as archived in Notion’s backend.<br /><br />
         This does not permanently delete the block from the system — it is archived and no longer rendered.
+      </div>
 
-    </div>
-
-      <h2>Example Response</h2>
+      <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "object": "block",
   "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",

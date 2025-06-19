@@ -1,45 +1,83 @@
+:root {
+  --tab-bg: #f9f9fb;
+  --tab-hover: #f0f0f3;
+  --tab-active-bg: #ffffff;
+  --tab-border: #e5e7eb;
+  --tab-text: #374151;
+  --tab-active-text: #2563eb;
+  --tab-shadow: rgba(0, 0, 0, 0.04);
+  --tab-radius: 0.5rem;
+  --tab-panel-bg: #ffffff;
+}
 
-/* Tabs Styling */
+body.dark {
+  --tab-bg: #1e1e20;
+  --tab-hover: #2a2a2e;
+  --tab-active-bg: #111113;
+  --tab-border: #3f3f46;
+  --tab-text: #d1d5db;
+  --tab-active-text: #60a5fa;
+  --tab-shadow: rgba(255, 255, 255, 0.04);
+  --tab-panel-bg: #18181b;
+}
+
 .tabs {
   display: flex;
-  border-bottom: 2px solid #ccc;
-  margin-bottom: 1em;
-  max-width: 700px;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  border-bottom: 1px solid var(--tab-border);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
 }
 
 .tab-button {
-  background: #f0f0f0;
-  border: none;
-  padding: 0.75em 1.5em;
+  background: var(--tab-bg);
+  color: var(--tab-text);
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--tab-radius);
   cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin-right: 0.25em;
-  transition: background-color 0.3s;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .tab-button:hover {
-  background: #e0e0e0;
+  background: var(--tab-hover);
 }
 
 .tab-button.active {
-  background: white;
-  border-bottom: 2px solid white;
-  font-weight: 700;
-  color: #007acc;
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  border: 1px solid var(--tab-active-text);
+  font-weight: 600;
 }
 
 .tab-panel {
-  background: white;
-  border: 1px solid #ccc;
-  border-top: none;
-  padding: 1em;
-  font-family: monospace, monospace;
-  white-space: pre-wrap;
-  max-width: 700px;
-  margin-bottom: 2em;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  background: var(--tab-panel-bg);
+  color: var(--tab-text);
+  padding: 1rem 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid var(--tab-border);
+  border-radius: var(--tab-radius);
+  box-shadow: 0 2px 4px var(--tab-shadow);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  overflow-x: auto;
+}
+
+.tab-panel {
+  opacity: 0;
+  transform: translateY(5px);
+  animation: fadeInTab 0.3s ease-out forwards;
+}
+
+@keyframes fadeInTab {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

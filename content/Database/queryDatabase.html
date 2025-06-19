@@ -8,12 +8,12 @@
 </head>
 <body>
 
-  <h1>queryDatabase</h1>
+  <h1 id="queryDatabase">queryDatabase</h1>
 
   <p>Executes a simple query on a Notion database and returns the <strong>first page of matching results</strong>.<br />
   This is a lightweight version of <code>queryAllDatabase</code>, designed for quick lookups or previews.</p>
 
-  <h2>Parameters</h2>
+  <h2 id="parameters">Parameters</h2>
   <table>
     <thead>
       <tr>
@@ -36,7 +36,7 @@
     </tbody>
   </table>
 
-  <h2>Simplified Filter Syntax</h2>
+  <h2 id="simplified-filter-syntax">Simplified Filter Syntax</h2>
   <p>Instead of passing the full Notion API filter structure, you can provide an intuitive shorthand:</p>
 
   <table>
@@ -95,7 +95,7 @@
 console.log(Object.keys(schema));</code></pre>
   </div>
 
-  <h2>Example</h2>
+  <h2 id="example">Example</h2>
   <pre><code>const filter = {
   Status: 'In Progress',
   Estimate: { greater_than: 5 }
@@ -104,14 +104,14 @@ console.log(Object.keys(schema));</code></pre>
 const result = await notion.queryDatabase('your-database-id', filter);
 console.log(result.results);</code></pre>
 
-  <h2>Returns</h2>
+  <h2 id="returns">Returns</h2>
   <p>A <code>Promise</code> resolving to an object containing:</p>
   <ul>
     <li>Up to 100 matching pages</li>
     <li>Metadata for pagination (e.g. <code>has_more</code>, <code>next_cursor</code>)</li>
   </ul>
 
-  <h2>Example Response</h2>
+  <h2 id="example-response">Example Response</h2>
   <pre><code>{
   "object": "list",
   "results": [

@@ -8,11 +8,11 @@
 </head>
 <body>
 
-  <h1>createDatabase</h1>
+  <h1 id="Database-createDatabase">createDatabase</h1>
 
   <p>Creates a new Notion database on a given parent page.</p>
 
-  <h2>Parameters</h2>
+  <h2 id="Database-createDatabase-parameters">Parameters</h2>
   <table>
     <thead>
       <tr>
@@ -40,7 +40,7 @@
     </tbody>
   </table>
 
-  <h2>Example</h2>
+  <h2 id="Database-createDatabase-example">Example</h2>
   <pre><code>const newDatabase = await notion.createDatabase(
   "ID of the parent page",
   "Example", // Title of the new database
@@ -54,7 +54,7 @@
   }
 );</code></pre>
 
-  <h2>Supported Property Types</h2>
+  <h2 id="Database-createDatabase-supportedPropertyTypes">Supported Property Types</h2>
   <p>These types can be used directly in <code>createDatabase</code>.</p>
 
   <table>
@@ -90,11 +90,11 @@
 }</code></pre>
   </div>
 
-  <h2>Returns</h2>
+  <h2 id="Database-createDatabase-returns">Returns</h2>
   <p>A <code>Promise</code> resolving to the created Notion database object.</p>
   <p>If <code>options</code> includes complex property types (e.g., status/select), Notion will auto-generate property IDs and return metadata including IDs, URLs, parent info, etc.</p>
 
-  <h2>Example Response</h2>
+  <h2 id="Database-createDatabase-exampleResponse">Example Response</h2>
   <pre><code>{
   "object": "database",
   "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",

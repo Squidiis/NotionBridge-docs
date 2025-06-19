@@ -9,10 +9,10 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>createPage</h1>
+      <h1 id="createPage">createPage</h1>
       <p>Creates a new page in the specified Notion database using simplified property input.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -35,14 +35,14 @@
         </tbody>
       </table>
 
-      <h2>Example</h2>
+      <h2 id="example">Example</h2>
       <pre><code class="language-js">const newPage = await notion.createPage('databaseId', {
   Status: 'Open',
   Name: 'New-Page'
 });
 console.log(newPage);</code></pre>
 
-      <h2>Supported Property Types for <code>formatProperties</code></h2>
+      <h2 id="supportedPropertyTypes">Supported Property Types for <code>formatProperties</code></h2>
       <table>
         <thead>
           <tr>
@@ -110,7 +110,7 @@ console.log(newPage);</code></pre>
         </tbody>
       </table>
 
-      <h3>Example usage for <code>userInput</code></h3>
+      <h3 id="exampleUserInput">Example usage for <code>userInput</code></h3>
       <pre><code class="language-js">const userInput = {
   Name: "My Task",
   Status: "In Progress",
@@ -121,7 +121,7 @@ console.log(newPage);</code></pre>
   Phone: "+1234567890"
 };</code></pre>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>A Promise resolving to the newly created page object returned by the Notion API.</p>
 
       <div class="warning-box">
@@ -130,7 +130,7 @@ console.log(newPage);</code></pre>
         Use <code>getDatabaseProperties</code> to inspect the available properties before creating a new page.
       </div>
 
-      <h2>Example Response</h2>
+      <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "object": "page",
   "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",

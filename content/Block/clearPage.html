@@ -9,10 +9,10 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>clearPage</h1>
+      <h1 id="clearPage">clearPage</h1>
       <p>Clears all child blocks from a Notion page or block, then returns the updated page or block object.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -30,10 +30,10 @@
         </tbody>
       </table>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>A <code>Promise</code> that resolves to the updated page or block object after all children have been removed.</p>
 
-      <h2>Example</h2>
+      <h2 id="example">Example</h2>
       <pre><code class="language-js">const updatedBlock = await notion.clearPage("pageId_or_blockId");
 console.log(updatedBlock);
 </code></pre>
@@ -44,7 +44,7 @@ console.log(updatedBlock);
         <strong>Warning:</strong> This operation is destructive. All child content will be permanently removed and cannot be recovered.
       </div>
 
-      <h2>Example Response</h2>
+      <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "object": "block",
   "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",

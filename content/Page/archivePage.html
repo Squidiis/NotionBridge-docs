@@ -9,10 +9,10 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>archivePage</h1>
+      <h1 id="archivePage">archivePage</h1>
       <p>Archives an existing Notion page by setting the <code>archived</code> property to <code>true</code>.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -30,18 +30,18 @@
         </tbody>
       </table>
 
-      <h2>Example</h2>
+      <h2 id="example">Example</h2>
       <pre><code class="language-js">const result = await notion.archivePage('pageId');
 console.log(result);</code></pre>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>A Promise resolving to the updated page object with <code>archived: true</code>.</p>
 
       <div class="tip-box">
         <strong>Tip:</strong> You can unarchive a page later by updating it with <code>archived: false</code> using <code>updatePage</code>.
       </div>
 
-      <h2>Example Response</h2>
+      <h2 id="example-response">Example Response</h2>
       <pre><code class="language-json">{
   "object": "page",
   "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",

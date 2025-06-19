@@ -8,12 +8,12 @@
 </head>
 <body>
 
-  <h1>queryAllDatabase</h1>
+  <h1 id="queryAllDatabase">queryAllDatabase</h1>
 
   <p>Queries an entire Notion database and retrieves <strong>all matching pages</strong>, handling pagination automatically.<br />
   Supports simplified filter syntax that is internally converted to the Notion API's official format.</p>
 
-  <h2>Parameters</h2>
+  <h2 id="parameters">Parameters</h2>
   <table>
     <thead>
       <tr>
@@ -36,7 +36,7 @@
     </tbody>
   </table>
 
-  <h2>Simplified Filter Syntax</h2>
+  <h2 id="simplified-filter-syntax">Simplified Filter Syntax</h2>
   <p>Instead of passing the full Notion API filter structure, you can provide an intuitive shorthand:</p>
 
   <table>
@@ -95,7 +95,7 @@
 console.log(Object.keys(schema));</code></pre>
   </div>
 
-  <h2>Example</h2>
+  <h2 id="example">Example</h2>
   <pre><code>const userFilter = {
   Status: 'In Progress',
   Delivery: { before: '2025-06-30' },
@@ -106,11 +106,11 @@ console.log(Object.keys(schema));</code></pre>
 const result = await notion.queryAllDatabase('your-database-id', userFilter);
 console.log(result);</code></pre>
 
-  <h2>Returns</h2>
+  <h2 id="returns">Returns</h2>
   <p>A <code>Promise</code> resolving to an array of Notion pages matching the filter.</p>
   <p>Automatically handles pagination for large result sets.</p>
 
-  <h2>Example Response</h2>
+  <h2 id="example-response">Example Response</h2>
   <pre><code>[
   {
     "object": "page",

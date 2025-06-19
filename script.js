@@ -2,7 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const contentArea = document.querySelector("#content");
   const toc = document.getElementById("toc");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
-  const logoImg = document.getElementById("logo-img");
+  const logoLink = document.getElementById("nav-notionbridge");
+
+  const SCROLL_CONTAINER = contentArea;
+  const OFFSET = 80;
+  let scrollLocked = false;
+
+  logoLink.addEventListener("click", async (e) => {
+    e.preventDefault(); 
+    const defaultSection = "intro";
+    history.replaceState(null, "", `#${defaultSection}`); 
+    await loadSection(defaultSection);                 
+    const link = document.querySelector(`.sidebar a[data-section="${defaultSection}"]`);
+    if (link) markActiveLink(link);
+  });
 
   if (localStorage.getItem("dark-mode") === "true") {
     document.body.classList.add("dark");
@@ -10,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateLogo(darkMode) {
+    const logoImg = document.getElementById("logo-img");
     logoImg.src = darkMode ? "docs/assets/logo-dark.svg" : "docs/assets/logo-light.svg";
   }
 
@@ -28,17 +42,40 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const section = link.getAttribute("data-section");
       await loadSection(section);
+      markActiveLink(link);
+      scrollSmoothTo(0);
     });
   });
 
+  function markActiveLink(link) {
+    document.querySelectorAll(".sidebar a").forEach(l => l.classList.remove("active"));
+    link.classList.add("active");
+  }
+
   async function loadSection(section) {
     try {
-      const res = await fetch(`content/${section}.html`);
-      if (!res.ok) throw new Error(`Fehler beim Laden von ${section}`);
+      let path = "";
+
+      if (!section.includes("-")) {
+      
+        path = `content/${section}.html`;
+      } else {
+        const parts = section.split("-");
+        const folder = parts.shift();
+        const file = parts.join("-"); 
+        path = `content/${folder}/${file}.html`;
+      }
+
+      const res = await fetch(path);
+      if (!res.ok) throw new Error(`Fehler beim Laden von ${path}`);
+
       const html = await res.text();
       contentArea.innerHTML = html;
+
       updateTOC();
-      initTabs(); 
+      initTabs();
+      scrollSmoothTo(0);
+      history.replaceState(null, "", `#${section}`);
     } catch (err) {
       contentArea.innerHTML = `<p>⚠️ Konnte <strong>${section}</strong> nicht laden.</p>`;
       toc.innerHTML = "";
@@ -56,8 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
     headers.forEach(header => {
       const level = parseInt(header.tagName.substring(1));
       const text = header.textContent;
-      let id = header.id || text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
-      header.id = id;
+      let id = header.id;
+      if (!id) {
+        id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
+        header.id = id;
+      }
 
       const li = document.createElement("li");
       const a = document.createElement("a");
@@ -78,6 +118,80 @@ document.addEventListener("DOMContentLoaded", () => {
       currentLevel = level;
       ulStack[ulStack.length - 1].appendChild(li);
     });
+
+    toc.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", e => {
+        e.preventDefault();
+        const href = a.getAttribute("href");
+
+        if (href && href.startsWith("#")) {
+          const id = href.slice(1);
+          scrollAndHighlight(id);
+          toc.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+          a.parentElement.classList.add("active");
+          history.replaceState(null, "", href);
+        }
+      });
+    });
+  }
+
+  function scrollAndHighlight(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const containerRect = SCROLL_CONTAINER.getBoundingClientRect();
+    const targetRect = el.getBoundingClientRect();
+    const scrollTop = SCROLL_CONTAINER.scrollTop;
+    const targetScroll = targetRect.top - containerRect.top + scrollTop - OFFSET;
+
+    lockScroll();
+    el.classList.add("scroll-highlight");
+
+    scrollSmoothTo(targetScroll, 700, () => {
+      setTimeout(() => {
+        el.classList.remove("scroll-highlight");
+        unlockScroll();
+      }, 1000);
+    });
+  }
+
+  function scrollSmoothTo(targetY, duration = 500, callback = null) {
+    const startY = SCROLL_CONTAINER.scrollTop;
+    const distance = targetY - startY;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      SCROLL_CONTAINER.scrollTop = startY + distance * ease;
+
+      if (progress < 1) {
+        requestAnimationFrame(animation);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    function easeInOutCubic(t) {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    requestAnimationFrame(animation);
+  }
+
+  function lockScroll() {
+    scrollLocked = true;
+    SCROLL_CONTAINER.style.overflowY = "hidden";
+  }
+
+  function unlockScroll() {
+    scrollLocked = false;
+    SCROLL_CONTAINER.style.overflowY = "auto";
   }
 
   function initTabs() {
@@ -101,11 +215,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function onScrollTOC() {
+    if (scrollLocked) return;
+
+    const headers = contentArea.querySelectorAll("h1, h2, h3");
+    const scrollPos = SCROLL_CONTAINER.scrollTop;
+    let currentId = null;
+
+    for (let i = headers.length - 1; i >= 0; i--) {
+      const header = headers[i];
+      if (header.offsetTop - OFFSET - 10 <= scrollPos) {
+        currentId = header.id;
+        break;
+      }
+    }
+
+    toc.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+    if (currentId) {
+      const activeLink = toc.querySelector(`a[href="#${currentId}"]`);
+      if (activeLink) activeLink.parentElement.classList.add("active");
+    }
+  }
+
+  SCROLL_CONTAINER.addEventListener("scroll", onScrollTOC);
+
   const initial = window.location.hash?.substring(1);
-  if (initial) loadSection(initial);
+  if (initial) {
+    loadSection(initial).then(() => {
+      const link = document.querySelector(`.sidebar a[data-section="${initial}"]`);
+      if (link) markActiveLink(link);
+    });
+  } else {
+    const firstLink = document.querySelector(".sidebar a[data-section]");
+    if (firstLink) {
+      markActiveLink(firstLink);
+      loadSection(firstLink.getAttribute("data-section"));
+    }
+  }
 
   window.addEventListener("popstate", () => {
     const current = window.location.hash?.substring(1);
-    if (current) loadSection(current);
+    if (current) {
+      loadSection(current);
+      const link = document.querySelector(`.sidebar a[data-section="${current}"]`);
+      if (link) markActiveLink(link);
+    }
   });
 });

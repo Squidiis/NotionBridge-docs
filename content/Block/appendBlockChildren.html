@@ -9,10 +9,10 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>appendBlockChildren</h1>
+      <h1 id="appendBlockChildren">appendBlockChildren</h1>
       <p>Appends child blocks to a specified block or page using the Notion API.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -35,10 +35,10 @@
         </tbody>
       </table>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>A <code>Promise</code> that resolves to the updated block object containing the new children.</p>
 
-      <h2>Usage with Block Builder Functions</h2>
+      <h2 id="usageWithBlockBuilderFunctions">Usage with Block Builder Functions</h2>
       <p>These helper functions can be used to generate valid block objects:</p>
       <ul>
         <li><code>createParagraphBlock(text)</code></li>
@@ -55,7 +55,7 @@
         <li><code>createPageLinkBlock(pageId)</code></li>
       </ul>
 
-      <h2>Example</h2>
+      <h2 id="example">Example</h2>
       <pre><code class="language-js">const blocks = [
   notion.createHeadingBlock("Project Overview", 2),
   notion.createParagraphBlock("This is the introduction."),
@@ -72,14 +72,14 @@
 await notion.appendBlockChildren("parentBlockId", blocks);
 </code></pre>
 
-      <h2>Notes</h2>
+      <h2 id="notes">Notes</h2>
       <ul>
         <li>The <code>blockId</code> must refer to a block type that supports children (e.g., pages, toggles).</li>
         <li><code>children</code> must be an array of valid Notion block objects.</li>
       </ul>
       <p>This operation is additive. Existing children will remain intact unless explicitly removed by another operation.</p>
 
-      <h2>Example Response</h2>
+      <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "object": "list",
   "results": [

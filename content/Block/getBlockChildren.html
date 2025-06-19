@@ -9,11 +9,11 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>getBlockChildren</h1>
+      <h1 id="getBlockChildren">getBlockChildren</h1>
       <p>Retrieves the child blocks of a Notion block or page.<br />
       Optionally supports automatic pagination to fetch all children across multiple pages.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -45,19 +45,19 @@
         </tbody>
       </table>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>If <code>getAll</code> is <code>false</code>, returns the raw Notion API response object containing a single page of results (with <code>next_cursor</code>, etc.).</p>
       <p>If <code>getAll</code> is <code>true</code>, returns:</p>
       <pre><code class="language-js">{
   results: Array&lt;Object&gt;
 }</code></pre>
 
-      <h3>Example (Get a single page of children)</h3>
+      <h3 id="exampleSinglePage">Example (Get a single page of children)</h3>
       <pre><code class="language-js">const result = await getBlockChildren("blockId");
 console.log(result.results);
 </code></pre>
 
-      <h3>Example (Get all children across pages)</h3>
+      <h3 id="exampleAllPages">Example (Get all children across pages)</h3>
       <pre><code class="language-js">const result = await getBlockChildren("blockId", 100, true);
 console.log(result.results.length); // All children
 </code></pre>
@@ -69,7 +69,7 @@ console.log(result.results.length); // All children
         Children can include various block types (paragraphs, headings, toggles, etc.).
       </div>
 
-      <h2>Example Response</h2>
+      <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "results": [
     {

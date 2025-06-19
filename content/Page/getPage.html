@@ -9,10 +9,10 @@
 <body>
   <main class="doc-page">
     <article>
-      <h1>getPage</h1>
+      <h1 id="getPage">getPage</h1>
       <p>Retrieves the metadata and properties of a specific Notion page by its ID.</p>
 
-      <h2>Parameters</h2>
+      <h2 id="parameters">Parameters</h2>
       <table>
         <thead>
           <tr>
@@ -30,14 +30,14 @@
         </tbody>
       </table>
 
-      <h2>Example</h2>
+      <h2 id="example">Example</h2>
       <pre><code class="language-js">const page = await notion.getPage('pageId');
 console.log(page);</code></pre>
 
-      <h2>Returns</h2>
+      <h2 id="returns">Returns</h2>
       <p>A Promise resolving to the Notion page object with all metadata and properties.</p>
 
-      <h2>Example Response</h2>
+      <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "object": "page",
   "id": "d3f9a2b7-1c5a-4e8b-b456-9f0a12345678",
