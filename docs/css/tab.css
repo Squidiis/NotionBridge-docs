@@ -5,9 +5,10 @@
   --tab-border: #e5e7eb;
   --tab-text: #374151;
   --tab-active-text: #2563eb;
-  --tab-shadow: rgba(0, 0, 0, 0.04);
-  --tab-radius: 0.5rem;
+  --tab-shadow: rgba(0, 0, 0, 0.1);
+  --tab-radius: 0.75rem;
   --tab-panel-bg: #ffffff;
+  --tab-focus-outline: #93c5fd;
 }
 
 body.dark {
@@ -17,62 +18,91 @@ body.dark {
   --tab-border: #3f3f46;
   --tab-text: #d1d5db;
   --tab-active-text: #60a5fa;
-  --tab-shadow: rgba(255, 255, 255, 0.04);
+  --tab-shadow: rgba(255, 255, 255, 0.1);
+  --tab-radius: 0.75rem;
   --tab-panel-bg: #18181b;
+  --tab-focus-outline: #60a5fa;
 }
 
 .tabs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  border-bottom: 1px solid var(--tab-border);
-  margin-bottom: 1.2rem;
+  flex-wrap: nowrap;
+  gap: 0.6rem;
+  border-bottom: 2px solid var(--tab-border);
+  margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--tab-active-text) transparent;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background-color: var(--tab-active-text);
+  border-radius: 3px;
 }
 
 .tab-button {
   background: var(--tab-bg);
   color: var(--tab-text);
-  border: 1px solid transparent;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
+  border: 1.5px solid transparent;
+  padding: 0.5rem 1.3rem;
+  font-size: 1rem;
   font-weight: 500;
   border-radius: var(--tab-radius);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 4px transparent;
+  user-select: none;
+  white-space: nowrap;
 }
 
-.tab-button:hover {
+.tab-button:hover:not(.active) {
   background: var(--tab-hover);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.15);
+}
+
+.tab-button:focus-visible {
+  outline: 3px solid var(--tab-focus-outline);
+  outline-offset: 2px;
 }
 
 .tab-button.active {
   background: var(--tab-active-bg);
   color: var(--tab-active-text);
-  border: 1px solid var(--tab-active-text);
-  font-weight: 600;
+  border-color: var(--tab-active-text);
+  font-weight: 700;
+  box-shadow: 0 0 8px var(--tab-active-text);
+  cursor: default;
+  pointer-events: none;
 }
 
 .tab-panel {
   background: var(--tab-panel-bg);
   color: var(--tab-text);
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  border: 1px solid var(--tab-border);
+  border: 1.5px solid var(--tab-border);
   border-radius: var(--tab-radius);
-  box-shadow: 0 2px 4px var(--tab-shadow);
+  box-shadow: 0 4px 12px var(--tab-shadow);
   margin-top: 1rem;
   margin-bottom: 2rem;
   width: 100%;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 1rem;
   overflow-x: auto;
-}
 
-.tab-panel {
+  /* Animation */
   opacity: 0;
-  transform: translateY(5px);
-  animation: fadeInTab 0.3s ease-out forwards;
+  transform: translateY(8px);
+  animation: fadeInTab 0.35s ease-out forwards;
 }
 
 @keyframes fadeInTab {
