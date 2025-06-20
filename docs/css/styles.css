@@ -148,7 +148,7 @@ body.dark .left-nav a:hover {
 
 /* SIDEBAR */
 nav.sidebar {
-  width: 240px;
+  width: 260px; 
   background-color: #ffffff;
   padding: 2rem 1.25rem;
   border-right: 1px solid #e5e7eb;
@@ -180,7 +180,7 @@ body.dark nav.sidebar > div > strong {
 }
 
 nav.sidebar .submenu {
-  padding-left: 1rem;
+  padding-left: 0.85rem; 
   margin-bottom: 1.25rem;
 }
 
@@ -190,7 +190,7 @@ nav.sidebar .submenu li {
 
 nav.sidebar .submenu li a {
   display: block;
-  padding: 0.35rem 0.75rem;
+  padding: 0.35rem 0.6rem;
   color: #475569;
   text-decoration: none;
   border-radius: 0;
@@ -254,7 +254,6 @@ body.dark aside {
   color: #a0aec0;
 }
 
-/* ASIDE ELEMENTS */
 aside h3 {
   color: #334155;
   margin-bottom: 0.75rem;
