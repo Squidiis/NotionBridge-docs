@@ -72,13 +72,11 @@
 await notion.appendBlockChildren("parentBlockId", blocks);
 </code></pre>
 
-      <h2 id="notes">Notes</h2>
-      <ul>
-        <li>The <code>blockId</code> must refer to a block type that supports children (e.g., pages, toggles).</li>
-        <li><code>children</code> must be an array of valid Notion block objects.</li>
-      </ul>
-      <p>This operation is additive. Existing children will remain intact unless explicitly removed by another operation.</p>
-
+  <div class="note-box">
+    <p><strong>Note:</strong> The <code>blockId</code> must refer to a block type that supports children (e.g., pages, toggles).</p>
+    <p><code>children</code> must be an array of valid Notion block objects.</p>
+    <p>This operation is additive. Existing children will remain intact unless explicitly removed by another operation.</p>
+  </div>
       <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
   "object": "list",

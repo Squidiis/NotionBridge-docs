@@ -60,9 +60,9 @@
     <p>⚠️ Without this step, your integration will not be authorized and API requests will return a 403 Forbidden error.</p>
 
     <h2>Example Usage</h2>
-    <pre><code>import easynotion from 'easynotion';
+    <pre><code>import notionbridge from 'notionbridge';
 
-const notion = easynotion('secret_abc123xyz456'); // Use your own integration token
+const notion = notionbridge('secret_abc123xyz456'); // Use your own integration token
 
 // Example: Query a Notion database
 const entries = await notion.queryDatabase('your-database-id');
