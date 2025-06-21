@@ -3,18 +3,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const toc = document.getElementById("toc");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
   const logoLink = document.getElementById("nav-notionbridge");
+  const prevBtn = document.getElementById("prevPageBtn");
+  const nextBtn = document.getElementById("nextPageBtn");
 
   const SCROLL_CONTAINER = contentArea;
   const OFFSET = 80;
   let scrollLocked = false;
 
   logoLink.addEventListener("click", async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const defaultSection = "intro";
-    history.replaceState(null, "", `#${defaultSection}`); 
-    await loadSection(defaultSection);                 
+    history.replaceState(null, "", `#${defaultSection}`);
+    await loadSection(defaultSection);
     const link = document.querySelector(`.sidebar a[data-section="${defaultSection}"]`);
     if (link) markActiveLink(link);
+    updateNavigationButtons();
   });
 
   if (localStorage.getItem("dark-mode") === "true") {
@@ -44,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await loadSection(section);
       markActiveLink(link);
       scrollSmoothTo(0);
+      updateNavigationButtons();
     });
   });
 
@@ -57,17 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
       let path = "";
 
       if (!section.includes("-")) {
-      
         path = `content/${section}.html`;
       } else {
         const parts = section.split("-");
         const folder = parts.shift();
-        const file = parts.join("-"); 
+        const file = parts.join("-");
         path = `content/${folder}/${file}.html`;
       }
 
       const res = await fetch(path);
-      if (!res.ok) throw new Error(`Fehler beim Laden von ${path}`);
+      if (!res.ok) throw new Error(`Failed to load ${path}`);
 
       const html = await res.text();
       contentArea.innerHTML = html;
@@ -77,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollSmoothTo(0);
       history.replaceState(null, "", `#${section}`);
     } catch (err) {
-      contentArea.innerHTML = `<p>⚠️ Konnte <strong>${section}</strong> nicht laden.</p>`;
+      contentArea.innerHTML = `<p>⚠️ Could not load <strong>${section}</strong>.</p>`;
       toc.innerHTML = "";
       console.error(err);
     }
@@ -123,7 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
       a.addEventListener("click", e => {
         e.preventDefault();
         const href = a.getAttribute("href");
-
         if (href && href.startsWith("#")) {
           const id = href.slice(1);
           scrollAndHighlight(id);
@@ -237,6 +239,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function getAllSections() {
+    return Array.from(document.querySelectorAll(".sidebar a[data-section]"))
+      .map(link => link.getAttribute("data-section"));
+  }
+
+  function getCurrentSectionIndex() {
+    const current = window.location.hash.substring(1);
+    const sections = getAllSections();
+    return sections.indexOf(current);
+  }
+
+  function updateNavigationButtons() {
+    const sections = getAllSections();
+    const currentIndex = getCurrentSectionIndex();
+
+    if (prevBtn) {
+      prevBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
+      prevBtn.onclick = () => {
+        if (currentIndex > 0) {
+          const previous = sections[currentIndex - 1];
+          const link = document.querySelector(`.sidebar a[data-section="${previous}"]`);
+          if (link) link.click();
+        }
+      };
+    }
+
+    if (nextBtn) {
+      nextBtn.style.display = currentIndex < sections.length - 1 ? "inline-block" : "none";
+      nextBtn.onclick = () => {
+        if (currentIndex < sections.length - 1) {
+          const next = sections[currentIndex + 1];
+          const link = document.querySelector(`.sidebar a[data-section="${next}"]`);
+          if (link) link.click();
+        }
+      };
+    }
+  }
+
   SCROLL_CONTAINER.addEventListener("scroll", onScrollTOC);
 
   const initial = window.location.hash?.substring(1);
@@ -244,21 +284,25 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSection(initial).then(() => {
       const link = document.querySelector(`.sidebar a[data-section="${initial}"]`);
       if (link) markActiveLink(link);
+      updateNavigationButtons();
     });
   } else {
     const firstLink = document.querySelector(".sidebar a[data-section]");
     if (firstLink) {
       markActiveLink(firstLink);
-      loadSection(firstLink.getAttribute("data-section"));
+      const first = firstLink.getAttribute("data-section");
+      loadSection(first).then(updateNavigationButtons);
     }
   }
 
   window.addEventListener("popstate", () => {
     const current = window.location.hash?.substring(1);
     if (current) {
-      loadSection(current);
-      const link = document.querySelector(`.sidebar a[data-section="${current}"]`);
-      if (link) markActiveLink(link);
+      loadSection(current).then(() => {
+        const link = document.querySelector(`.sidebar a[data-section="${current}"]`);
+        if (link) markActiveLink(link);
+        updateNavigationButtons();
+      });
     }
   });
 });

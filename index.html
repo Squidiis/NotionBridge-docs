@@ -2,59 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NotionBridge Docs</title>
-  <link rel="icon" href="docs/assets/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="docs/css/styles.css" />
   <link rel="stylesheet" href="docs/css/tab.css" />
   <link rel="stylesheet" href="docs/css/content.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="docs/assets/favicon.ico" type="image/x-icon" />
 </head>
 <body>
   <header class="site-header">
     <div class="left-nav">
-      <a href="#" id="nav-notionbridge" title="Back to the introduction page">
-        <img id="logo-img" src="docs/assets/logo-light.svg" alt="Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;" />
+      <a href="#" id="nav-notionbridge">
+        <img id="logo-img" src="docs/assets/logo-light.svg" alt="Logo" style="height: 40px; margin-right: 8px;" />
         NotionBridge
       </a>
-      <a href="https://blog.example.com" target="_blank" rel="noopener">Blog</a>
+      <a href="https://blog.example.com" target="_blank">Blog</a>
     </div>
-    <button id="dark-mode-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">🌞</button>
+    <div class="header-buttons">
+      <a href="https://github.com/Squidiis/NotionBridge" target="_blank" title="GitHub" class="github-link">
+        <img src="docs/assets/github.svg" alt="GitHub" />
+        GitHub
+      </a>
+      <button id="dark-mode-toggle" title="Toggle dark mode">🌞</button>
+    </div>
+
   </header>
 
   <div class="container">
     <nav class="sidebar">
-      <div>
-        <strong>Intro</strong>
+      <div><strong>Intro</strong>
         <ul class="submenu">
-          <li><a href="#Intro" data-section="intro">Intro</a></li>
+          <li><a href="#intro" data-section="intro">Intro</a></li>
         </ul>
       </div>
-      <div>
-        <strong>Database</strong>
+      <div><strong>Database</strong>
         <ul class="submenu">
-          <li><a href="#Database-getDatabaseProperties" data-section="Database-getDatabaseProperties">getDatabaseProperties</a></li>
-          <li><a href="#Database-createDatabase" data-section="Database-createDatabase">createDatabase</a></li>
-          <li><a href="#Database-queryDatabase" data-section="Database-queryDatabase">queryDatabase</a></li>
-          <li><a href="#Database-queryAllDatabase" data-section="Database-queryAllDatabase">queryAllDatabase</a></li>
+          <li><a data-section="Database-getDatabaseProperties" href="#Database-getDatabaseProperties">getDatabaseProperties</a></li>
+          <li><a data-section="Database-createDatabase" href="#Database-createDatabase">createDatabase</a></li>
+          <li><a data-section="Database-queryDatabase" href="#Database-queryDatabase">queryDatabase</a></li>
+          <li><a data-section="Database-queryAllDatabase" href="#Database-queryAllDatabase">queryAllDatabase</a></li>
         </ul>
       </div>
-      <div>
-        <strong>Page</strong>
+      <div><strong>Page</strong>
         <ul class="submenu">
-          <li><a href="#Page-getPage" data-section="Page-getPage">getPage</a></li>
-          <li><a href="#Page-createPage" data-section="Page-createPage">createPage</a></li>
-          <li><a href="#Page-archivePage" data-section="Page-archivePage">archivePage</a></li>
-          <li><a href="#Page-updatePage" data-section="Page-updatePage">updatePage</a></li>
+          <li><a data-section="Page-getPage" href="#Page-getPage">getPage</a></li>
+          <li><a data-section="Page-createPage" href="#Page-createPage">createPage</a></li>
+          <li><a data-section="Page-archivePage" href="#Page-archivePage">archivePage</a></li>
+          <li><a data-section="Page-updatePage" href="#Page-updatePage">updatePage</a></li>
         </ul>
       </div>
-      <div>
-        <strong>Block</strong>
+      <div><strong>Block</strong>
         <ul class="submenu">
-          <li><a href="#Block-getBlockChildren" data-section="Block-getBlockChildren">getBlockChildren</a></li>
-          <li><a href="#Block-appendBlockChildren" data-section="Block-appendBlockChildren">appendBlockChildren</a></li>
-          <li><a href="#Block-deleteBlock" data-section="Block-deleteBlock">deleteBlock</a></li>
-          <li><a href="#Block-clearPage" data-section="Block-clearPage">clearPage</a></li>
+          <li><a data-section="Block-getBlockChildren" href="#Block-getBlockChildren">getBlockChildren</a></li>
+          <li><a data-section="Block-appendBlockChildren" href="#Block-appendBlockChildren">appendBlockChildren</a></li>
+          <li><a data-section="Block-deleteBlock" href="#Block-deleteBlock">deleteBlock</a></li>
+          <li><a data-section="Block-clearPage" href="#Block-clearPage">clearPage</a></li>
         </ul>
       </div>
     </nav>
@@ -66,10 +68,15 @@
       <section id="content">
         <p>Welcome! Select a topic from the menu on the left.</p>
       </section>
+
+      <div class="page-navigation">
+        <button id="prevPageBtn" style="display: none;">← Previous</button>
+        <button id="nextPageBtn">Next →</button>
+      </div>
     </main>
 
     <aside>
-      <h3>Contents</h3>
+      <h3>On this page</h3>
       <ul id="toc"></ul>
     </aside>
   </div>

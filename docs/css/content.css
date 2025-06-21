@@ -47,7 +47,7 @@ body {
 h1, h2, h3 {
   color: var(--heading-color);
   font-weight: 600;
-  margin-top: 2rem;
+  margin-top: 3rem; 
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
@@ -168,9 +168,9 @@ code:not(pre code) {
 
 /* INFO BOXES */
 .note-box, .tip-box, .warning-box {
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   border-radius: 0.5rem;
-  margin: 2rem 0;
+  margin: 3rem 0;
   font-size: 1rem;
   font-family: inherit;
   word-break: break-word;
@@ -280,7 +280,7 @@ code:not(pre code) {
   border-radius: 2px;
 }
 
-/* DARK MODE Info-Boxen*/
+/* note-box*/
 body.dark .note-box {
   background-color: var(--note-bg);
   border-left-color: var(--note-border);
@@ -352,4 +352,14 @@ body.dark .warning-box code:not(pre code) {
 body.dark .warning-box mark {
   background-color: #f97316;
   color: #fff7ed;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+body.dark a {
+  color: #ffffff; 
 }

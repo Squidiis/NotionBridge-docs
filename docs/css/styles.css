@@ -180,12 +180,14 @@ body.dark nav.sidebar > div > strong {
 }
 
 nav.sidebar .submenu {
-  padding-left: 0.85rem; 
+  padding-left: 0.5rem; 
   margin-bottom: 1.25rem;
+  list-style: none; 
 }
 
 nav.sidebar .submenu li {
   margin-bottom: 0.5rem;
+  list-style: none;
 }
 
 nav.sidebar .submenu li a {
@@ -381,7 +383,7 @@ aside::-webkit-scrollbar-track {
   transition: background-color 0.3s ease;
 }
 
-/* SMOOTH CROLL */
+/* SMOOTH SCROLL */
 html {
   scroll-behavior: smooth;
 }
@@ -389,4 +391,101 @@ html {
 .scroll-highlight {
   background-color: rgba(255, 255, 0, 0.15);
   box-shadow: none;
+}
+.page-navigation {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1rem 3rem; 
+  border-top: 1px solid var(--tab-border);
+}
+
+.page-navigation button {
+  background: var(--tab-bg);
+  color: var(--tab-text);
+  border: 1.8px solid transparent;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--tab-radius);
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  user-select: none;
+  min-width: 110px;
+  box-shadow: 0 2px 6px var(--tab-shadow);
+  white-space: nowrap;
+}
+
+.page-navigation button:hover:not(:disabled) {
+  background: var(--tab-hover);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  border-color: var(--tab-active-text);
+  color: var(--tab-active-text);
+}
+
+.page-navigation button:focus-visible {
+  outline: 3px solid var(--tab-focus-outline);
+  outline-offset: 3px;
+  box-shadow: 0 0 8px var(--tab-focus-outline);
+}
+
+.page-navigation button:disabled {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  border-color: var(--tab-active-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* GITHUB LINK */
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;           
+  color: #334155;           
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;  
+  border-radius: 0;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.github-link img {
+  height: 24px;     
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.github-link:hover,
+.github-link:focus-visible {
+  color: #1e293b;         
+  background-color: rgba(0, 0, 0, 0.04);
+  outline: none;
+}
+
+.github-link:hover img,
+.github-link:focus-visible img {
+  opacity: 1;
+}
+
+body.dark .github-link {
+  color: #cbd5e1;
+}
+
+body.dark .github-link:hover,
+body.dark .github-link:focus-visible {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
 }
