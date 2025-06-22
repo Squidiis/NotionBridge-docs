@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let scrollLocked = false;
 
   logoLink.addEventListener("click", async (e) => {
+    const isOnMainPage = location.pathname.endsWith("index.html") || location.pathname === "/" || location.pathname === "";
+
+    if (!isOnMainPage) {
+      return;
+    }
+
     e.preventDefault();
     const defaultSection = "intro";
     history.replaceState(null, "", `#${defaultSection}`);
