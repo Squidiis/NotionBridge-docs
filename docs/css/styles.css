@@ -392,6 +392,8 @@ html {
   background-color: rgba(255, 255, 0, 0.15);
   box-shadow: none;
 }
+
+/* PAGE NAVIGATION */
 .page-navigation {
   display: flex;
   justify-content: space-between; 
@@ -442,7 +444,6 @@ html {
   opacity: 0.6;
 }
 
-
 /* GITHUB LINK */
 .github-link {
   display: inline-flex;
@@ -489,3 +490,55 @@ body.dark .github-link:focus-visible {
   color: #ffffff;
   background-color: rgba(255, 255, 255, 0.05);
 }
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#dark-mode-toggle {
+  padding: 0.35rem 0.75rem;
+  position: relative;
+  overflow: visible;
+  background-color: transparent; 
+  transition: none;
+  cursor: pointer;
+}
+
+#dark-mode-toggle img {
+  height: 28px;
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.85;
+  transition: none;
+  transform: none;
+  vertical-align: middle; 
+}
+
+#dark-mode-toggle:hover,
+#dark-mode-toggle:focus-visible {
+  background-color: transparent; 
+  outline: none;
+}
+
+#dark-mode-toggle:hover img,
+#dark-mode-toggle:focus-visible img {
+  opacity: 0.85;  
+  transform: none;
+}
+
+body.dark #dark-mode-toggle {
+  color: #cbd5e1;
+}
+
+body.dark #dark-mode-toggle:hover,
+body.dark #dark-mode-toggle:focus-visible {
+  background-color: transparent;
+}
+
+body.dark #dark-mode-toggle img {
+  opacity: 0.85;
+}
+
