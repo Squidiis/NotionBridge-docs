@@ -58,4 +58,7 @@ export function setupNavigation() {
       });
     }
   });
+
+  // Initial-Call: Buttons korrekt setzen
+  updateNavigationButtons();
 }

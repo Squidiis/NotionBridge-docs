@@ -7,9 +7,9 @@ import { setupSectionLoader } from './sections.js';
 import { setupTOCTracking } from './toc.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  setupDarkMode();
   setupSidebar();
-  setupNavigation();
+  setupDarkMode();
   setupSectionLoader();
+  setupNavigation();
   setupTOCTracking();
 });

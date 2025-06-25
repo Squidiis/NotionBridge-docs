@@ -767,3 +767,34 @@ body.dark #dark-mode-toggle img {
   }
 }
 
+.github-link.mobile-footer {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .github-link {
+    display: none !important;
+  }
+  .github-link.mobile-footer {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin: 1.2rem 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: #2563eb;
+    background: #f1f5ff;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    box-shadow: 0 1px 4px rgba(37,99,235,0.08);
+    width: 90vw;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 0.5rem;
+  }
+  .github-link.mobile-footer img {
+    height: 22px;
+    opacity: 0.85;
+  }
+}
+

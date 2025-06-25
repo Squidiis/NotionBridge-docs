@@ -42,7 +42,41 @@ export function markActiveLink(link) {
   link.classList.add("active");
 }
 
-function scrollSmoothTo(targetY, duration = 500) {
+let scrollLocked = false;
+
+export function scrollAndHighlight(id) {
+  const contentArea = document.getElementById("content");
+  const OFFSET = 80;
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const containerRect = contentArea.getBoundingClientRect();
+  const targetRect = el.getBoundingClientRect();
+  const scrollTop = contentArea.scrollTop;
+  const targetScroll = targetRect.top - containerRect.top + scrollTop - OFFSET;
+
+  lockScroll();
+  el.classList.add("scroll-highlight");
+
+  scrollSmoothTo(targetScroll, 700, () => {
+    setTimeout(() => {
+      el.classList.remove("scroll-highlight");
+      unlockScroll();
+    }, 1000);
+  });
+}
+
+function lockScroll() {
+  scrollLocked = true;
+  document.getElementById("content").style.overflowY = "hidden";
+}
+
+function unlockScroll() {
+  scrollLocked = false;
+  document.getElementById("content").style.overflowY = "auto";
+}
+
+function scrollSmoothTo(targetY, duration = 500, callback = null) {
   const container = document.getElementById("content");
   const startY = container.scrollTop;
   const distance = targetY - startY;
@@ -60,6 +94,8 @@ function scrollSmoothTo(targetY, duration = 500) {
 
     if (progress < 1) {
       requestAnimationFrame(animation);
+    } else if (callback) {
+      callback();
     }
   }
 
@@ -125,7 +161,6 @@ function initTabs() {
 
 export function setupSectionLoader() {
   const links = document.querySelectorAll('.sidebar a[data-section]');
-
   links.forEach(link => {
     link.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -133,6 +168,22 @@ export function setupSectionLoader() {
       markActiveLink(link);
       await loadSection(section);
     });
+  });
+
+  // TOC-Links: smooth scroll + highlight
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.closest('#toc a')) {
+      const a = e.target.closest('#toc a');
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const id = href.slice(1);
+        scrollAndHighlight(id);
+        document.querySelectorAll('#toc li').forEach(li => li.classList.remove('active'));
+        a.parentElement.classList.add('active');
+        history.replaceState(null, "", href);
+      }
+    }
   });
 
   const initial = location.hash.slice(1) || 'intro';
