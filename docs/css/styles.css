@@ -771,7 +771,7 @@ body.dark #dark-mode-toggle img {
   display: none !important;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .github-link {
     display: none !important;
   }
