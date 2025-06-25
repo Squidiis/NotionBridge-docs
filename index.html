@@ -11,6 +11,7 @@
 </head>
 <body>
   <header class="site-header">
+    <button id="sidebar-toggle" aria-label="Open menu" title="Open menu">&#9776;</button>
     <div class="left-nav">
       <a href="#" id="nav-notionbridge">
         <img id="logo-img" src="docs/assets/logo-light.svg" alt="Logo" />
@@ -29,6 +30,7 @@
     </div>
   </header>
 
+  <div id="sidebar-overlay"></div>
   <div class="container">
     <nav class="sidebar">
       <div><strong>Intro</strong>
@@ -61,7 +63,6 @@
         </ul>
       </div>
     </nav>
-
     <main>
       <header>
         <h1>Documentation</h1>
@@ -75,13 +76,12 @@
         <button id="nextPageBtn">Next →</button>
       </div>
     </main>
-
     <aside>
       <h3>On this page</h3>
       <ul id="toc"></ul>
     </aside>
   </div>
-
-  <script src="script.js"></script>
+    <script type="module" src="docs/js/main.js"></script>
 </body>
+</html>
 </html>
