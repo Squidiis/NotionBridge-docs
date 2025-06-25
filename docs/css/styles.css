@@ -546,14 +546,31 @@ body.dark #dark-mode-toggle img {
 /* Sidebar toggle button (hidden by default) */
 #sidebar-toggle {
   display: none;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
+  color: #2563eb;
   font-size: 2rem;
-  color: inherit;
   cursor: pointer;
   margin-right: 1rem;
   padding: 0.25rem 0.5rem;
-  z-index: 1002;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.08);
+  transition: background 0.15s, color 0.15s;
+}
+
+#sidebar-toggle:active,
+#sidebar-toggle:focus-visible {
+  background: #e0e7ff;
+  color: #1e40af;
+  outline: none;
+}
+
+#sidebar-toggle svg {
+  display: block;
+  width: 28px;
+  height: 28px;
 }
 
 @media (max-width: 1024px) {
@@ -566,20 +583,12 @@ body.dark #dark-mode-toggle img {
     position: relative;
   }
   #sidebar-toggle {
-    display: inline-block !important;
-    position: relative;
-    z-index: 1002;
+    display: flex !important;
     margin-right: 0.5rem;
     margin-left: 0;
-    background: none;
-    border: none;
     font-size: 2.2rem;
-    color: inherit;
-    cursor: pointer;
-    padding: 0.15rem 0.5rem;
     height: 44px;
     width: 44px;
-    align-self: center;
   }
   .left-nav {
     flex: 1 1 auto;
