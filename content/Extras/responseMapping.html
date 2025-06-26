@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+  <title>mapResponse | NotionBridge Docs</title>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1 id="mapResponse">mapResponse</h1>
+      <p>
+        <code>mapResponse</code> is a utility function that transforms raw Notion API responses into simplified, developer-friendly JavaScript objects.<br>
+        It recursively maps pages, databases, and blocks, extracting only the most relevant fields and values.
+      </p>
+
+      <h2 id="parameters">Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>notionResponse</code></td>
+            <td><code>object</code></td>
+            <td>The raw response object from the Notion API (page, database, block, or list).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="returns">Returns</h2>
+      <p>
+        A simplified JavaScript object (or array of objects) representing the Notion entity.<br>
+        The structure depends on the input type (page, database, block, or list).
+      </p>
+
+      <h2 id="example">Example</h2>
+      <pre><code class="language-js">import { mapResponse } from 'notionbridge/extras/responseMapping';
+
+const raw = await fetchNotionApiSomehow();
+const mapped = mapResponse(raw);
+console.log(mapped);
+</code></pre>
+
+      <h2 id="mapping-behavior">Mapping Behavior</h2>
+      <ul>
+        <li><strong>Pages:</strong> Returns an object with <code>id</code>, <code>url</code>, and all properties as plain values.</li>
+        <li><strong>Databases:</strong> Returns an object with <code>id</code>, <code>title</code>, and a simplified <code>properties</code> map.</li>
+        <li><strong>Blocks:</strong> Returns an object with <code>id</code>, <code>type</code>, <code>has_children</code>, <code>text</code> (if present), and other relevant fields.</li>
+        <li><strong>Lists:</strong> Recursively maps each item in <code>results</code> using <code>mapResponse</code>.</li>
+      </ul>
+
+      <h2 id="notes">Notes</h2>
+      <ul>
+        <li>Unknown or unsupported types are returned as-is or with a <code>raw</code> field containing the original content.</li>
+        <li>For lists, <code>mapResponse</code> returns an array of mapped objects.</li>
+        <li>Nested children (blocks) are recursively mapped.</li>
+      </ul>
+
+      <h2 id="example-response">Example Response</h2>
+      <div class="tabs" role="tablist" aria-label="Response mode tabs">
+        <button class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-page" id="tab-page">Page</button>
+        <button class="tab-button" role="tab" aria-selected="false" aria-controls="panel-block" id="tab-block">Block</button>
+        <button class="tab-button" role="tab" aria-selected="false" aria-controls="panel-database" id="tab-database">Database</button>
+      </div>
+
+      <div tabindex="0" class="tab-panel" role="tabpanel" id="panel-page" aria-labelledby="tab-page">
+        <pre><code class="language-json">{
+  "id": "abc123",
+  "url": "https://www.notion.so/abc123",
+  "Name": "Demo",
+  "Status": "In Progress"
+}</code></pre>
+      </div>
+      <div tabindex="0" class="tab-panel" role="tabpanel" id="panel-block" aria-labelledby="tab-block" hidden>
+        <pre><code class="language-json">{
+  "id": "block123",
+  "type": "to_do",
+  "has_children": false,
+  "text": "Check this",
+  "checked": true,
+  "children": []
+}</code></pre>
+      </div>
+      <div tabindex="0" class="tab-panel" role="tabpanel" id="panel-database" aria-labelledby="tab-database" hidden>
+        <pre><code class="language-json">{
+  "id": "db123",
+  "title": "My Database",
+  "properties": {
+    "Name": { "id": "title", "type": "title" },
+    "Status": { "id": "status", "type": "status" }
+  }
+}</code></pre>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
