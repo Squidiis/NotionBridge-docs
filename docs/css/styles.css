@@ -767,12 +767,10 @@ body.dark #dark-mode-toggle img {
   }
 }
 
-/* Standard: Footer-GitHub-Link ausblenden */
 .github-link.mobile-footer {
   display: none !important;
 }
 
-/* Mobile/Tablet: Header-GitHub-Link ausblenden, Footer-GitHub-Link anzeigen und stylen */
 @media (max-width: 900px) {
   .github-link {
     display: none !important;
