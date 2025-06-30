@@ -1,6 +1,3 @@
-/**
- * Handles dark mode toggling and theme-related UI changes
- */
 
 export function setupDarkMode() {
   const darkModeToggle = document.getElementById("dark-mode-toggle");

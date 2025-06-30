@@ -1,4 +1,3 @@
-// Entry point: initializes all UI behaviors
 
 import { setupDarkMode } from './theme.js';
 import { setupNavigation } from './navigation.js';

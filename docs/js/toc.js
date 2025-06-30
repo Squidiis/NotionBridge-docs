@@ -1,6 +1,3 @@
-/**
- * Manages the dynamic Table of Contents and its scroll tracking
- */
 
 export function setupTOCTracking() {
   const toc = document.getElementById("toc");

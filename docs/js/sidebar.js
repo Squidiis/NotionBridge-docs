@@ -1,6 +1,3 @@
-/**
- * Handles mobile sidebar toggling and responsive visibility
- */
 
 export function setupSidebar() {
   const sidebar = document.querySelector("nav.sidebar");

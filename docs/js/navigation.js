@@ -1,6 +1,3 @@
-/**
- * Handles sidebar navigation and back/forward button logic
- */
 
 import { loadSection, markActiveLink, getAllSections } from './sections.js';
 

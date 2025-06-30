@@ -1,6 +1,3 @@
-/**
- * Loads section content dynamically and manages smooth scrolling
- */
 
 export function loadSection(section) {
   const contentArea = document.getElementById("content");
