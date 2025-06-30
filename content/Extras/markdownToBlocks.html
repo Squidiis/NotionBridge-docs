@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+  <title>markdownToBlocks | NotionBridge Docs</title>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1 id="markdownToBlocks">markdownToBlocks</h1>
+      <p>
+        <code>markdownToBlocks</code> is a utility function that converts a markdown string into an array of Notion block objects.<br>
+        This allows you to easily transform markdown content into a format suitable for <code>appendBlockChildren</code> or page creation in Notion.
+      </p>
+
+      <h2 id="parameters">Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>markdown</code></td>
+            <td><code>string</code></td>
+            <td>The markdown text to convert.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="returns">Returns</h2>
+      <p>
+        An <code>Array</code> of Notion block objects representing the parsed markdown structure.<br>
+        Each block can be used directly with <code>appendBlockChildren</code> or similar NotionBridge functions.
+      </p>
+
+      <h2 id="supported-markdown">Supported Markdown Features</h2>
+      <ul>
+        <li>Headings (<code>#</code>, <code>##</code>, <code>###</code>)</li>
+        <li>Paragraphs</li>
+        <li>Bulleted lists (<code>-</code>, <code>*</code>, <code>+</code>)</li>
+        <li>Numbered lists (<code>1.</code>, <code>1)</code>)</li>
+        <li>To-do lists (<code>- [ ]</code>, <code>- [x]</code>)</li>
+        <li>Blockquotes (<code>&gt;</code>)</li>
+        <li>Horizontal rules (<code>---</code>)</li>
+        <li>Code blocks (<code>```</code> with language detection)</li>
+        <li>Inline code (<code>`code`</code>)</li>
+        <li>Bold (<code>**bold**</code>, <code>__bold__</code>)</li>
+        <li>Italic (<code>*italic*</code>, <code>_italic_</code>)</li>
+        <li>Links (<code>[text](url)</code>)</li>
+        <li>Images (<code>![alt](url)</code>)</li>
+        <li>Tables (GitHub-flavored markdown)</li>
+      </ul>
+
+      <h2 id="example">Example</h2>
+      <pre><code class="language-js">import { markdownToBlocks } from 'notionbridge/extras/markdownToBlocks';
+
+const markdown = `
+# Project Overview
+
+This is a **bold** paragraph with a [link](https://example.com).
+
+- [x] Write docs
+- [ ] Add more features
+
+## Code Example
+
+\`\`\`js
+console.log("Hello, world!");
+\`\`\`
+
+| Name   | Status    |
+|--------|-----------|
+| Task 1 | Complete  |
+| Task 2 | Incomplete|
+`;
+
+const blocks = markdownToBlocks(markdown);
+await notion.appendBlockChildren('parentBlockId', blocks);
+</code></pre>
+
+      <h2 id="notes">Notes</h2>
+      <ul>
+        <li>Only basic markdown features are supported (no nested lists, no advanced table features).</li>
+        <li>Inline formatting (bold, italic, code, links) is supported inside paragraphs, headings, and list items.</li>
+        <li>Images are added as Notion image blocks with external URLs.</li>
+        <li>Tables are converted to Notion table blocks (if at least header and one row are present).</li>
+        <li>Code blocks use language detection for Notion's code block type (see <code>languageMap</code> in the source).</li>
+      </ul>
+
+      <h2 id="example-response">Example Output</h2>
+      <pre><code class="language-json">[
+  {
+    "object": "block",
+    "type": "heading_1",
+    "heading_1": {
+      "rich_text": [
+        { "type": "text", "text": { "content": "Project Overview" } }
+      ]
+    }
+  },
+  {
+    "object": "block",
+    "type": "paragraph",
+    "paragraph": {
+      "rich_text": [
+        { "type": "text", "text": { "content": "This is a " } },
+        { "type": "text", "text": { "content": "bold" }, "annotations": { "bold": true } },
+        { "type": "text", "text": { "content": " paragraph with a " } },
+        { "type": "text", "text": { "content": "link" }, "href": "https://example.com" },
+        { "type": "text", "text": { "content": "." } }
+      ]
+    }
+  },
+  {
+    "object": "block",
+    "type": "to_do",
+    "to_do": {
+      "rich_text": [
+        { "type": "text", "text": { "content": "Write docs" } }
+      ],
+      "checked": true
+    }
+  },
+  {
+    "object": "block",
+    "type": "to_do",
+    "to_do": {
+      "rich_text": [
+        { "type": "text", "text": { "content": "Add more features" } }
+      ],
+      "checked": false
+    }
+  },
+  {
+    "object": "block",
+    "type": "heading_2",
+    "heading_2": {
+      "rich_text": [
+        { "type": "text", "text": { "content": "Code Example" } }
+      ]
+    }
+  },
+  {
+    "object": "block",
+    "type": "code",
+    "code": {
+      "rich_text": [
+        { "type": "text", "text": { "content": "console.log(\"Hello, world!\");" } }
+      ],
+      "language": "javascript"
+    }
+  },
+  {
+    "object": "block",
+    "type": "table",
+    "table": {
+      "table_width": 2,
+      "has_column_header": true,
+      "has_row_header": false,
+      "children": [
+        {
+          "object": "block",
+          "type": "table_row",
+          "table_row": {
+            "cells": [
+              [{ "type": "text", "text": { "content": "Name" } }],
+              [{ "type": "text", "text": { "content": "Status" } }]
+            ]
+          }
+        },
+        {
+          "object": "block",
+          "type": "table_row",
+          "table_row": {
+            "cells": [
+              [{ "type": "text", "text": { "content": "Task 1" } }],
+              [{ "type": "text", "text": { "content": "Complete" } }]
+            ]
+          }
+        },
+        {
+          "object": "block",
+          "type": "table_row",
+          "table_row": {
+            "cells": [
+              [{ "type": "text", "text": { "content": "Task 2" } }],
+              [{ "type": "text", "text": { "content": "Incomplete" } }]
+            ]
+          }
+        }
+      ]
+    }
+  }
+]</code></pre>
+    </article>
+  </main>
+</body>
+</html>
