@@ -1,10 +1,10 @@
-
 import { loadSection, markActiveLink, getAllSections } from './sections.js';
 
 export function setupNavigation() {
   const sidebarLinks = document.querySelectorAll(".sidebar a[data-section]");
   const prevBtn = document.getElementById("prevPageBtn");
   const nextBtn = document.getElementById("nextPageBtn");
+  const notionbridgeBtn = document.getElementById("nav-notionbridge");
 
   sidebarLinks.forEach(link => {
     link.addEventListener("click", async e => {
@@ -15,6 +15,16 @@ export function setupNavigation() {
       updateNavigationButtons();
     });
   });
+
+  if (notionbridgeBtn) {
+    notionbridgeBtn.addEventListener("click", async e => {
+      e.preventDefault();
+      const section = notionbridgeBtn.getAttribute("data-section") || "intro";
+      await loadSection(section);
+      markActiveLink(notionbridgeBtn);
+      updateNavigationButtons();
+    });
+  }
 
   function getCurrentSectionIndex() {
     const current = window.location.hash.substring(1);
@@ -53,9 +63,13 @@ export function setupNavigation() {
         markActiveLink(link);
         updateNavigationButtons();
       });
+    } else if (current === "intro" && notionbridgeBtn) {
+      loadSection("intro").then(() => {
+        markActiveLink(notionbridgeBtn);
+        updateNavigationButtons();
+      });
     }
   });
 
-  // Initial-Call: Buttons korrekt setzen
   updateNavigationButtons();
 }
