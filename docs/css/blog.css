@@ -86,3 +86,46 @@ code {
 body.dark code {
   background: rgba(255, 255, 255, 0.1);
 }
+
+
+@media (max-width: 768px) {
+  .blog-main {
+    padding: 1.5rem 1rem;
+  }
+
+  .entry-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .entry-title {
+    font-size: 1.1rem;
+  }
+
+  .blog-entry p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-main {
+    padding: 1rem 0.75rem;
+  }
+
+  .entry-title {
+    font-size: 1rem;
+  }
+
+  .entry-time {
+    font-size: 0.75rem;
+  }
+
+  .blog-entry {
+    padding: 0.85rem 1rem;
+  }
+
+  .blog-entry p {
+    font-size: 0.9rem;
+  }
+}
