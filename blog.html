@@ -22,7 +22,9 @@
         <img src="docs/assets/github.svg" alt="GitHub" />
         GitHub
       </a>
-      <button id="dark-mode-toggle">🌞</button>
+      <button id="dark-mode-toggle" title="Toggle dark mode">
+        <img id="mode-icon" src="docs/assets/light-mode-toggle.svg" alt="Light Mode" class="dark-mode-icon" />
+      </button>
     </div>
   </header>
 
@@ -49,5 +51,10 @@
     </section>
   </main>
 
+  <script type="module">
+    import { setupDarkMode } from './docs/js/theme.js';
+
+    setupDarkMode();
+  </script>
 </body>
 </html>
