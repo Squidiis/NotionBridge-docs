@@ -23,14 +23,13 @@ The documentation provides practical examples and explanations for all core feat
 
 - **Extras**
   - `mapResponse`: Simplifies raw Notion responses for further processing
+  - `markdownToBlocks`: Converts markdown pages into notation blocks (only normal markdown pages)
 
 Each page includes:
 - Parameter tables
 - Example calls
 - Example responses
 - Notes on supported property types and filter syntax
-
----
 
 ## Quickstart: Using NotionBridge
 
@@ -64,8 +63,6 @@ Each page includes:
 
 5. **Pay attention to property names**
    - Property names must match exactly as written in Notion (including spaces, emojis, capitalization).
-   - Use `getDatabaseProperties` to see all valid fields.
-
----
+   - Use `getDatabaseProperties` or `getBlockChildren` to see all valid fields.
 
 **For more details, examples, and tips, see the individual HTML documentation pages in the `content/` folder.**
