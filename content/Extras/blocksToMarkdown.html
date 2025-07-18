@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+  <title>blocksToMarkdown | NotionBridge Docs</title>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1 id="blocksToMarkdown">blocksToMarkdown</h1>
+      <p>
+        <code>blocksToMarkdown</code> converts an array of Notion block objects into a Markdown string.<br>
+        This is useful for exporting Notion content to Markdown files or displaying it in Markdown editors.
+      </p>
+
+      <h2 id="parameters">Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>blocks</code></td>
+            <td><code>Array</code></td>
+            <td>Array of Notion block objects (from <code>getBlockChildren</code> or <code>mapResponse</code>).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="returns">Returns</h2>
+      <p>
+        A <code>string</code> containing the Markdown representation of the blocks.
+      </p>
+
+      <h2 id="supported-blocks">Supported Block Types</h2>
+      <ul>
+        <li>Paragraphs</li>
+        <li>Headings (<code>#</code>, <code>##</code>, <code>###</code>)</li>
+        <li>Bulleted lists</li>
+        <li>Numbered lists</li>
+        <li>Quotes</li>
+        <li>Dividers</li>
+        <li>To-do lists</li>
+        <li>Code blocks (with language)</li>
+        <li>Images</li>
+        <li>Callouts</li>
+        <li>Toggles (as <code>&lt;details&gt;</code> blocks)</li>
+        <li>Tables (GitHub-flavored Markdown)</li>
+      </ul>
+
+      <h2 id="example">Example</h2>
+      <pre><code class="language-js">import { blocksToMarkdown } from 'notionbridge/extras/blocksToMarkdown';
+
+const blocks = [
+  { type: 'heading_1', text: 'Project Overview' },
+  { type: 'paragraph', text: 'This is a **bold** paragraph.' },
+  { type: 'bulleted_list_item', text: 'First bullet' },
+  { type: 'numbered_list_item', text: 'Step one' },
+  { type: 'to_do', text: 'Write docs', checked: true },
+  { type: 'code', code: 'console.log("Hello, world!");', language: 'js' },
+  { type: 'image', url: 'https://example.com/image.png' },
+  { type: 'divider' }
+];
+
+const markdown = blocksToMarkdown(blocks);
+console.log(markdown);
+</code></pre>
+
+      <h2 id="notes">Notes</h2>
+      <ul>
+        <li>Nested blocks (children) are recursively converted.</li>
+        <li>Table blocks are rendered as Markdown tables if header and rows are present.</li>
+        <li>Unsupported or unknown block types are skipped or rendered as plain text if possible.</li>
+      </ul>
+
+      <h2 id="example-output">Example Output</h2>
+      <pre><code class="language-md"># Project Overview
+
+This is a **bold** paragraph.
+
+- First bullet
+1. Step one
+- [x] Write docs
+
+```js
+console.log("Hello, world!");
+```
+
+![Image](https://example.com/image.png)
+
+---
+</code></pre>
+    </article>
+  </main>
+</body>
+</html>
