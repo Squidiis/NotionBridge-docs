@@ -24,6 +24,7 @@ The documentation provides practical examples and explanations for all core feat
 - **Extras**
   - `mapResponse`: Simplifies raw Notion responses for further processing
   - `markdownToBlocks`: Converts markdown pages into notation blocks (only normal markdown pages)
+  - `blocksToMarkdown`: Converts Notion block objects (array) into a Markdown string
 
 Each page includes:
 - Parameter tables
