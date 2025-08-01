@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>addSelectOption | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1 id="addSelectOption">addSelectOption</h1>
+      <p>Adds and selects a new option for a <code>select</code> or <code>multi_select</code> property of a Notion page.</p>
+
+      <h2 id="parameters">Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>pageId</code></td>
+            <td><code>string</code></td>
+            <td>ID of the Notion page to update.</td>
+          </tr>
+          <tr>
+            <td><code>propertyName</code></td>
+            <td><code>string</code></td>
+            <td>Name of the <code>select</code> or <code>multi_select</code> property.</td>
+          </tr>
+          <tr>
+            <td><code>newOption</code></td>
+            <td><code>string</code></td>
+            <td>The new option to add and select.</td>
+          </tr>
+          <tr>
+            <td><code>multiSelect</code></td>
+            <td><code>boolean</code></td>
+            <td>(Optional) Whether the property is a <code>multi_select</code> (default: <code>true</code>).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="example">Example</h2>
+      <pre><code class="language-js">const result = await addSelectOption(
+  notionFetch,
+  token,
+  'pageId123',
+  'Tags',
+  'New Option',
+  true
+);
+console.log(result);
+</code></pre>
+
+      <h2 id="returns">Returns</h2>
+      <p>A Promise resolving to the updated Notion page object.</p>
+
+      <div class="warning-box">
+        <strong>Warning:</strong> The property must be of type <code>select</code> or <code>multi_select</code>.<br />
+        If the specified option does not already exist in the database schema, it will be created and added automatically.<br />
+        Ensure the property name is spelled correctly and exists on the page.
+    </div>
+
+      <h2 id="exampleResponse">Example Response</h2>
+      <pre><code class="language-json">{
+  "object": "page",
+  "id": "f19b1234-5678-90ab-cdef-1234567890ab",
+  "properties": {
+    "Tags": {
+      "multi_select": [
+        { "name": "New Option", "color": "default" }
+      ]
+    }
+  },
+  "archived": false,
+  "url": "https://www.notion.so/ExamplePage-f19b1234567890abcdef1234567890ab"
+}</code></pre>
+    </article>
+  </main>
+</body>
+</html>
