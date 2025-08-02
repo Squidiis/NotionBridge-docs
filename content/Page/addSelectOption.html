@@ -46,16 +46,10 @@
       </table>
 
       <h2 id="example">Example</h2>
-      <pre><code class="language-js">const result = await addSelectOption(
-  notionFetch,
-  token,
-  'pageId123',
-  'Tags',
-  'New Option',
-  true
-);
-console.log(result);
-</code></pre>
+      <pre><code class="language-js">const result = await notion.addSelectOption('pageId', 'propertyName', 'newOption', 'multiSelect');
+        console.log(result);
+      </code>
+      </pre>
 
       <h2 id="returns">Returns</h2>
       <p>A Promise resolving to the updated Notion page object.</p>

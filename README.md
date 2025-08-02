@@ -10,10 +10,11 @@ The documentation provides practical examples and explanations for all core feat
   - `queryAllDatabase`: Query a database with filters
 
 - **Pages**
-  - `createPage`: Create a new page with simple property objects
-  - `getPage`: Load all metadata and properties of a page
-  - `updatePage`: Update properties, icon, cover, or archived status
-  - `archivePage`: Archive a page
+  - `createPage`: Create a new page with simple property objects  
+  - `getPage`: Load all metadata and properties of a page  
+  - `updatePage`: Update properties, icon, cover, or archived status  
+  - `archivePage`: Archive a page  
+  - `addSelectOption`: Add and select a new value for a select or multi_select property (automatically updates schema)
 
 - **Blocks**
   - `getBlockChildren`: Fetch all child blocks of a page or block (including pagination)
