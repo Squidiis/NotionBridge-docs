@@ -61,10 +61,10 @@ console.log(result);
       <p>A Promise resolving to the updated Notion page object.</p>
 
       <div class="warning-box">
-        <strong>Warning:</strong> The property must be of type <code>select</code> or <code>multi_select</code>.<br />
-        If the specified option does not already exist in the database schema, it will be created and added automatically.<br />
-        Ensure the property name is spelled correctly and exists on the page.
-    </div>
+        <strong>Warning:</strong> This function relies on a Notion-side behavior (not a dedicated API endpoint) to add options.<br />
+        Therefore, the <code>select</code> or <code>multi_select</code> property name must be spelled exactly as it exists on the page.<br />
+        If the option does not already exist, Notion will automatically add it to the property’s schema as a new choice.
+      </div>
 
       <h2 id="exampleResponse">Example Response</h2>
       <pre><code class="language-json">{
