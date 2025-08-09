@@ -13,6 +13,7 @@ The documentation provides practical examples and explanations for all core feat
   - `createPage`: Create a new page with simple property objects  
   - `getPage`: Load all metadata and properties of a page  
   - `updatePage`: Update properties, icon, cover, or archived status  
+  - `updatePages`: Update multiple pages’ properties, icon, cover, or archived status in one call  
   - `archivePage`: Archive a page  
   - `addSelectOption`: Add and select a new value for a select or multi_select property (automatically updates schema)
 

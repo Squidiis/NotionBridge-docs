@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>updatePages | NotionBridge Docs</title>
+  <link rel="stylesheet" href="../../docs/css/content.css"/>
+</head>
+<body>
+  <main class="doc-page">
+    <article>
+      <h1 id="updatePages">updatePages</h1>
+      <p>Updates multiple Notion pages’ metadata and properties, including properties, icon, cover, and archived status for each page.</p>
+
+      <h2 id="parameters">Parameters</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>updatesArray</code></td>
+            <td><code>Array&lt;object&gt;</code></td>
+            <td>Array of update objects. Each object must contain:
+              <ul>
+                <li><code>pageId</code>: <code>string</code> – ID of the Notion page</li>
+                <li><code>update</code>: <code>object</code> – Update data:
+                  <ul>
+                    <li><code>properties</code>: Object of property values to update (e.g. <code>{ Name: "..." }</code>)</li>
+                    <li><code>icon</code>: Emoji string, image URL, or Notion icon object</li>
+                    <li><code>cover</code>: External image URL to set as cover</li>
+                    <li><code>archived</code>: <code>true</code> or <code>false</code> to archive/unarchive the page</li>
+                  </ul>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="example">Example</h2>
+      <pre><code class="language-js">const results = await notion.updatePages([
+  { pageId: "123abc", update: { properties: { Name: "Task A", Status: "Done" }, icon: "✅" } },
+  { pageId: "456def", update: { archived: true } }
+]);
+console.log(results);
+</code></pre>
+
+      <h2 id="returns">Returns</h2>
+      <p>A Promise resolving to an array of results for each page:
+        <code>{ pageId, status: 'fulfilled', response }</code> if successful, or
+        <code>{ pageId, status: 'rejected', error }</code> if an error occurred.</p>
+
+      <div class="warning-box">
+        <strong>Warning:</strong> Make sure the provided property names exactly match the database schema.<br />
+        If you try to use a property that doesn't exist, the API call will fail.<br />
+        Use <code>getDatabaseProperties</code> to inspect available properties before updating a page.
+      </div>
+
+      <h2 id="exampleResponse">Example Response</h2>
+      <pre><code class="language-json">[
+  {
+    "pageId": "123abc",
+    "status": "fulfilled",
+    "response": {
+      "object": "page",
+      "id": "123abc",
+      "properties": {
+        "Name": { "title": [ { "text": { "content": "Task A" } } ] },
+        "Status": { "status": { "name": "Done" } }
+      },
+      "archived": false
+    }
+  },
+  {
+    "pageId": "456def",
+    "status": "rejected",
+    "error": "Invalid pageId"
+  }
+]</code></pre>
+    </article>
+  </main>
+</body>
+</html>
